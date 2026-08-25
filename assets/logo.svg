@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 90" width="210" height="45" fill="none">
+  <defs>
+    <!-- V Swoosh Gradient -->
+    <linearGradient id="v-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00BFFF" />
+      <stop offset="50%" stop-color="#0878C9" />
+      <stop offset="100%" stop-color="#7B2CBF" />
+    </linearGradient>
+    
+    <!-- AI Text Gradient -->
+    <linearGradient id="ai-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00BFFF" />
+      <stop offset="100%" stop-color="#A560FF" />
+    </linearGradient>
+
+    <!-- Star Glow Filter -->
+    <filter id="star-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    
+    <filter id="cyan-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Logo Mark Group -->
+  <g transform="translate(10, 5)">
+    <!-- 3D Curved V Swoosh -->
+    <path d="M 12 18 C 10 32, 22 68, 38 68 C 48 68, 62 48, 72 26 C 64 42, 48 60, 38 60 C 26 60, 20 32, 24 18 Z" fill="url(#v-grad)" filter="url(#cyan-glow)" />
+    
+    <!-- Neural Network Lines -->
+    <line x1="38" y1="58" x2="48" y2="44" stroke="#00BFFF" stroke-width="1.5" opacity="0.8" />
+    <line x1="48" y1="44" x2="60" y2="34" stroke="#00BFFF" stroke-width="1.5" opacity="0.8" />
+    <line x1="48" y1="44" x2="44" y2="30" stroke="#A560FF" stroke-width="1.5" opacity="0.7" />
+    <line x1="60" y1="34" x2="68" y2="20" stroke="#00BFFF" stroke-width="1.5" opacity="0.9" />
+    <line x1="44" y1="30" x2="60" y2="34" stroke="#00BFFF" stroke-width="1.5" opacity="0.8" />
+    <line x1="38" y1="58" x2="52" y2="52" stroke="#A560FF" stroke-width="1.5" opacity="0.7" />
+    <line x1="52" y1="52" x2="60" y2="34" stroke="#00BFFF" stroke-width="1.5" opacity="0.8" />
+
+    <!-- Neural Nodes -->
+    <circle cx="38" cy="58" r="3" fill="#00BFFF" />
+    <circle cx="48" cy="44" r="2.5" fill="#A560FF" />
+    <circle cx="60" cy="34" r="3" fill="#00BFFF" />
+    <circle cx="44" cy="30" r="2" fill="#00BFFF" />
+    <circle cx="52" cy="52" r="2.5" fill="#00BFFF" />
+
+    <!-- Top Glowing Outline Star -->
+    <polygon points="68,8 72,18 82,18 74,24 77,34 68,27 59,34 62,24 54,18 64,18" fill="none" stroke="#A560FF" stroke-width="2" filter="url(#star-glow)" />
+    <circle cx="68" cy="20" r="3.5" fill="#00BFFF" filter="url(#star-glow)" />
+  </g>
+
+  <!-- Typography -->
+  <text x="110" y="54" font-family="'Space Grotesk', 'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="34" fill="#FFFFFF" letter-spacing="2">VENSAIRA</text>
+  <text x="325" y="54" font-family="'Space Grotesk', 'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="34" fill="url(#ai-grad)" letter-spacing="2">AI</text>
+</svg>
