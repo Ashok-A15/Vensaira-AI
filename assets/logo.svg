@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 90" width="210" height="45" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 92" width="230" height="50" fill="none">
   <defs>
     <!-- V Swoosh Gradient -->
     <linearGradient id="v-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -58,6 +58,9 @@
   </g>
 
   <!-- Typography -->
-  <text x="110" y="54" font-family="'Space Grotesk', 'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="34" fill="#FFFFFF" letter-spacing="2">VENSAIRA</text>
-  <text x="325" y="54" font-family="'Space Grotesk', 'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="34" fill="url(#ai-grad)" letter-spacing="2">AI</text>
+  <text x="110" y="46" font-family="'Space Grotesk', 'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="34" fill="#FFFFFF" letter-spacing="2">VENSAIRA</text>
+  <text x="325" y="46" font-family="'Space Grotesk', 'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="34" fill="url(#ai-grad)" letter-spacing="2">AI</text>
+
+  <!-- Tagline -->
+  <text x="110" y="72" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14.5" fill="#00BFFF" letter-spacing="1.2" opacity="0.95">Your Vision, Powered by AI</text>
 </svg>
