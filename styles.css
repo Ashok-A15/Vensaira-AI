@@ -14,10 +14,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  --midnight: #050B14;
-  --deep-navy: #081827;
-  --navy-blue: #0B2440;
-  --blue: #0F3D68;
+  --midnight: #091626;
+  --deep-navy: #0D2138;
+  --navy-blue: #102B48;
+  --blue: #154575;
   --electric-blue: #0878C9;
   --cyan-accent: #00BFFF;
   --violet-accent: #7B2CBF;
@@ -25,7 +25,7 @@
   --white: #FFFFFF;
   --soft-gray: #A7B4C4;
 
-  --card-bg: rgba(8, 24, 39, 0.75);
+  --card-bg: rgba(11, 28, 45, 0.8);
   --card-border: rgba(0, 191, 255, 0.18);
   --card-border-hover: rgba(0, 191, 255, 0.45);
   --glow-cyan: rgba(0, 191, 255, 0.22);
@@ -119,10 +119,10 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 191, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 191, 255, 0.025) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, transparent 85%);
+    linear-gradient(rgba(232, 213, 196, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 191, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, transparent 85%);
 }
 
 @keyframes floatBlob {
@@ -187,22 +187,30 @@ h4 {
   line-height: 1.7;
 }
 
-/* NAVBAR (Strictly NO CTA buttons) */
+/* Floating Dark Glass Navbar Header */
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--nav-height);
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 48px);
+  max-width: var(--container-width);
+  height: 68px;
   z-index: 100;
+  background: rgba(5, 11, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 191, 255, 0.25);
+  border-radius: 50px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.12);
   transition: var(--transition-normal);
 }
 
 .navbar.scrolled {
-  background: rgba(5, 11, 20, 0.88);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 191, 255, 0.12);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  top: 10px;
+  background: rgba(5, 11, 20, 0.95);
+  border-color: rgba(0, 191, 255, 0.4);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75);
 }
 
 .navbar-container {
@@ -210,6 +218,7 @@ h4 {
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  padding: 0 24px;
 }
 
 .brand-logo {
@@ -262,6 +271,42 @@ h4 {
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
+}
+
+/* Header CTA Pill Button Style */
+.nav-link.nav-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, rgba(0, 191, 255, 0.22) 0%, rgba(8, 120, 201, 0.35) 100%);
+  border: 1px solid rgba(0, 191, 255, 0.45);
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: var(--transition-fast);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.15);
+}
+
+.nav-link.nav-btn-cta::after {
+  display: none;
+}
+
+.nav-link.nav-btn-cta:hover,
+.nav-link.nav-btn-cta.active {
+  background: linear-gradient(135deg, var(--cyan-accent) 0%, var(--electric-blue) 100%);
+  color: var(--midnight);
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.nav-link.nav-btn-cta svg {
+  transition: transform 0.2s ease;
+}
+
+.nav-link.nav-btn-cta:hover svg {
+  transform: translateX(3px);
 }
 
 .mobile-toggle {
@@ -338,6 +383,66 @@ h4 {
   max-width: 520px;
 }
 
+/* Hero Actions & Buttons */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-normal);
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan-accent) 0%, var(--electric-blue) 100%);
+  color: var(--midnight);
+  border: 1px solid var(--cyan-accent);
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(0, 191, 255, 0.65);
+  background: linear-gradient(135deg, #33CDFF 0%, var(--cyan-accent) 100%);
+}
+
+.btn-primary svg {
+  transition: transform 0.2s ease;
+}
+
+.btn-primary:hover svg {
+  transform: translateX(4px);
+}
+
+.btn-secondary {
+  background: rgba(8, 24, 39, 0.7);
+  color: var(--white);
+  border: 1px solid rgba(0, 191, 255, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: rgba(11, 36, 64, 0.9);
+  border-color: var(--cyan-accent);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+}
+
 .hero-visual-wrapper {
   position: relative;
   width: 100%;
@@ -345,6 +450,114 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Floating Metric Badges */
+.hero-metric-badge {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(8, 24, 39, 0.85);
+  border: 1px solid rgba(0, 191, 255, 0.25);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  animation: floatBadge 4s ease-in-out infinite alternate;
+}
+
+.badge-top-right {
+  top: 24px;
+  right: -10px;
+}
+
+.badge-bottom-left {
+  bottom: 24px;
+  left: -10px;
+  animation-delay: 2s;
+}
+
+@keyframes floatBadge {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+.badge-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(0, 191, 255, 0.12);
+  border: 1px solid rgba(0, 191, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.badge-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.badge-value {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cyan-accent);
+  line-height: 1.2;
+}
+
+.badge-label {
+  font-size: 0.78rem;
+  color: var(--soft-gray);
+}
+
+/* Trust Strip Section */
+.trust-strip-section {
+  position: relative;
+  z-index: 2;
+  padding: 30px 0 50px;
+  border-bottom: 1px solid rgba(0, 191, 255, 0.08);
+}
+
+.trust-strip-label {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(167, 180, 196, 0.6);
+  margin-bottom: 24px;
+}
+
+.trust-logos-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.trust-logo-item {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(167, 180, 196, 0.45);
+  transition: var(--transition-fast);
+}
+
+.trust-logo-item:hover {
+  color: var(--cyan-accent);
+  text-shadow: 0 0 12px var(--glow-cyan);
 }
 
 #hero-canvas {
@@ -930,17 +1143,25 @@ h4 {
     gap: 20px;
   }
 
+  .navbar {
+    width: calc(100% - 24px);
+    top: 12px;
+    height: 62px;
+  }
+
   .nav-menu {
     position: fixed;
-    top: var(--nav-height);
-    left: 0;
-    width: 100%;
-    background: rgba(5, 11, 20, 0.95);
+    top: 80px;
+    left: 12px;
+    width: calc(100% - 24px);
+    background: rgba(5, 11, 20, 0.96);
     backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(0, 191, 255, 0.2);
     flex-direction: column;
-    padding: 30px;
-    gap: 24px;
-    border-bottom: 1px solid rgba(0, 191, 255, 0.15);
+    padding: 24px;
+    gap: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
     transform: translateY(-150%);
     transition: var(--transition-normal);
   }
@@ -985,5 +1206,502 @@ h4 {
   .values-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+}
+
+/* ==========================================================================
+   7. CONTACT SECTION & FORM STYLES
+   ========================================================================== */
+.contact-card {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 56px 48px;
+  background: rgba(8, 24, 39, 0.7);
+  border: 1px solid rgba(0, 191, 255, 0.22);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.contact-header {
+  margin-bottom: 40px;
+}
+
+.contact-eyebrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--cyan-accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.contact-title {
+  font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.contact-description {
+  color: var(--soft-gray);
+  font-size: 1.12rem;
+  line-height: 1.65;
+  max-width: 720px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.form-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required-star {
+  color: var(--cyan-accent);
+  font-weight: 700;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  background: rgba(5, 11, 20, 0.75);
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--white);
+  font-family: var(--font-main);
+  font-size: 0.98rem;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: rgba(167, 180, 196, 0.55);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--cyan-accent);
+  background: rgba(8, 24, 39, 0.9);
+  box-shadow: 0 0 16px rgba(0, 191, 255, 0.25);
+}
+
+/* Checkbox Grid */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(0, 191, 255, 0.35);
+  background: rgba(5, 11, 20, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.checkbox-box::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: solid var(--midnight);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: var(--transition-fast);
+}
+
+.custom-checkbox input[type="checkbox"]:checked~.checkbox-box {
+  background: var(--cyan-accent);
+  border-color: var(--cyan-accent);
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+.custom-checkbox input[type="checkbox"]:checked~.checkbox-box::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.checkbox-text {
+  font-size: 0.95rem;
+  color: var(--soft-gray);
+  transition: var(--transition-fast);
+}
+
+.custom-checkbox:hover .checkbox-text,
+.custom-checkbox input[type="checkbox"]:checked~.checkbox-text {
+  color: var(--white);
+}
+
+/* Submit Button & Actions */
+.form-actions {
+  margin-top: 12px;
+}
+
+.contact-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 38px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, rgba(0, 191, 255, 0.18) 0%, rgba(123, 44, 191, 0.35) 100%);
+  border: 1px solid var(--cyan-accent);
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+}
+
+.contact-submit-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--cyan-accent) 0%, var(--electric-blue) 100%);
+  color: var(--midnight);
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.45);
+}
+
+.contact-submit-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.contact-submit-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Success Message */
+.contact-success-msg {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding: 16px 22px;
+  border-radius: 12px;
+  background: rgba(0, 191, 255, 0.12);
+  border: 1px solid var(--cyan-accent);
+  color: var(--white);
+  font-size: 0.98rem;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+}
+
+.contact-success-msg.show {
+  display: flex;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.success-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--cyan-accent);
+  color: var(--midnight);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-card {
+    padding: 36px 24px;
+  }
+
+  .form-row.grid-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   8. LIGHT CREAM CONTACT CARD BOX (COMPACT & MINIMIZED)
+   ========================================================================== */
+.contact-page-main {
+  flex: 1;
+  padding-top: calc(var(--nav-height) + 24px);
+  padding-bottom: 50px;
+}
+
+.contact-cream-section {
+  padding: 0;
+}
+
+.contact-cream-card {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 32px 36px;
+  background: #FAF6F0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+}
+
+.contact-cream-header {
+  margin-bottom: 22px;
+}
+
+.cream-eyebrow {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #C07A2B;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.cream-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+  font-weight: 800;
+  color: #1B2446;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  line-height: 1.15;
+}
+
+.cream-description {
+  color: #4A5568;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  max-width: 560px;
+}
+
+.cream-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.cream-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1B2446;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cream-star {
+  color: #C07A2B;
+  font-weight: 700;
+}
+
+.cream-input,
+.cream-textarea {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #1A202C;
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  outline: none;
+  transition: var(--transition-fast);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.cream-input::placeholder,
+.cream-textarea::placeholder {
+  color: #A0AEC0;
+}
+
+.cream-input:focus,
+.cream-textarea:focus {
+  border-color: #1B2446;
+  box-shadow: 0 0 0 3px rgba(27, 36, 70, 0.1);
+  background: #FFFFFF;
+}
+
+/* Checkbox Styles */
+.cream-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.cream-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cream-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cream-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid #CBD5E0;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.cream-checkbox-box::after {
+  content: '';
+  width: 4px;
+  height: 8px;
+  border: solid #FFFFFF;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: var(--transition-fast);
+}
+
+.cream-checkbox input[type="checkbox"]:checked~.cream-checkbox-box {
+  background: #1B2446;
+  border-color: #1B2446;
+}
+
+.cream-checkbox input[type="checkbox"]:checked~.cream-checkbox-box::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.cream-checkbox-text {
+  font-size: 0.88rem;
+  color: #4A5568;
+  transition: var(--transition-fast);
+}
+
+.cream-checkbox:hover .cream-checkbox-text,
+.cream-checkbox input[type="checkbox"]:checked~.cream-checkbox-text {
+  color: #1B2446;
+  font-weight: 500;
+}
+
+.cream-form-actions {
+  margin-top: 6px;
+}
+
+.cream-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 30px;
+  border-radius: 8px;
+  background: #E8D5C4;
+  border: 1px solid #D8C3B0;
+  color: #1B2446;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.cream-submit-btn:hover {
+  background: #1B2446;
+  color: #FFFFFF;
+  border-color: #1B2446;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(27, 36, 70, 0.25);
+}
+
+.cream-success-msg {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: #EBF8FF;
+  border: 1px solid #BEE3F8;
+  color: #2B6CB0;
+  font-size: 0.92rem;
+}
+
+.cream-success-msg.show {
+  display: flex;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.cream-success-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #3182CE;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-cream-card {
+    padding: 24px 18px;
   }
 }

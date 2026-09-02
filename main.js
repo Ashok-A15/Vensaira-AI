@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroCanvas();
   initNavbarScroll();
   initMobileMenu();
+  initContactForm();
 });
 
 /* 1. Interactive AI Neural Network Canvas Visual */
@@ -196,5 +197,25 @@ function initMobileMenu() {
     link.addEventListener('click', () => {
       navMenu.classList.remove('active');
     });
+  });
+}
+
+/* 4. Interactive Contact Form Handler */
+function initContactForm() {
+  const form = document.getElementById('contact-form') || document.getElementById('contact-cream-form');
+  const successMsg = document.getElementById('contact-success-msg') || document.getElementById('contact-cream-success');
+  if (!form || !successMsg) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    successMsg.classList.add('show');
+    form.reset();
+
+    // Smooth scroll to success message
+    successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    setTimeout(() => {
+      successMsg.classList.remove('show');
+    }, 7000);
   });
 }
