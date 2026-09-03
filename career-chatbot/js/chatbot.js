@@ -95,7 +95,7 @@ class CareerChatbot {
         this.state.jobType = jobObj.jobType || 'Full-time';
 
         // Update header UI
-        if (this.headerBotName) this.headerBotName.textContent = this.config.botName || 'Vidwath';
+        if (this.headerBotName) this.headerBotName.textContent = this.config.botName || 'Vidwath Assistant';
         if (this.headerCompany) this.headerCompany.textContent = this.config.companyName || 'Vidwath';
         if (this.headerJobTitle) this.headerJobTitle.textContent = this.state.jobTitle;
         if (this.headerMeta) this.headerMeta.textContent = `${this.state.jobLocation} · ${this.state.jobType}`;
@@ -149,7 +149,7 @@ class CareerChatbot {
 
         // Populate header branding dynamically from config
         if (this.headerLogo) this.headerLogo.src = this.config.logo || './assets/logo-placeholder.svg';
-        if (this.headerBotName) this.headerBotName.textContent = this.config.botName || 'Vidwath';
+        if (this.headerBotName) this.headerBotName.textContent = this.config.botName || 'Vidwath Assistant';
         if (this.headerCompany) this.headerCompany.textContent = this.config.companyName || 'Vidwath';
         if (this.headerJobTitle) this.headerJobTitle.textContent = this.state.jobTitle;
         if (this.headerMeta) this.headerMeta.textContent = `${this.state.jobLocation} · ${this.state.jobType}`;

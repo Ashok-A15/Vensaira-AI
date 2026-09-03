@@ -87,7 +87,7 @@
             if (document.getElementById('chatbot-widget')) return;
 
             const config = window.BOT_CONFIG || {};
-            const botName = config.botName || 'Vidwath';
+            const botName = config.botName || 'Vidwath Assistant';
             const companyName = config.companyName || 'Vidwath';
             const defaultJob = (config.jobs && config.jobs.length > 0) 
                 ? config.jobs[0] 

@@ -11,7 +11,7 @@ const CHATBOT_QUESTIONS = [
         field: null,
         type: "welcome_buttons",
         isDataStep: false,
-        getPrompt: (config, state) => `Hi! I'm ${config.botName || 'Vidwath'}, and I'll help you apply for this job. Are you interested in this job?`,
+        getPrompt: (config, state) => `Hi! I'm ${config.botName || 'Vidwath Assistant'}, and I'll help you apply for this job. Are you interested in this job?`,
         options: [
             { label: "I'm interested", value: "interested", action: "next" },
             { label: "Not right now", value: "not_interested", action: "decline" }

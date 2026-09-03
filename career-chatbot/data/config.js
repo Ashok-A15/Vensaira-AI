@@ -9,7 +9,7 @@ const BOT_CONFIG = {
     demoMode: true,
 
     // Assistant & Company Branding
-    botName: "Vidwath",
+    botName: "Vidwath Assistant",
     companyName: "Vidwath",
     logo: "./career-chatbot/assets/logo-placeholder.svg",
 
