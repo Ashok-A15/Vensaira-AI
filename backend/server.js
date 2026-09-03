@@ -18,6 +18,9 @@ const express = require('express');
 const cors    = require('cors');
 require('dotenv').config();
 
+const { connectDB, getDBStatus } = require('./db');
+const Session = require('./models/Session');
+
 const app  = express();
 const PORT = process.env.PORT || 3001;
 
@@ -53,15 +56,122 @@ app.use(express.urlencoded({ extended: true }));
 
 /**
  * GET /api/health
- * Health check – confirms the server is running.
+ * Health check – confirms backend and database status.
  */
 app.get('/api/health', (req, res) => {
+    const dbStatus = getDBStatus();
     res.status(200).json({
         success: true,
+        backend: 'running',
         message: 'Vidwath backend is running',
+        mongodb: {
+            connected: dbStatus.isConnected,
+            status: dbStatus.status
+        },
         environment: process.env.NODE_ENV || 'development',
         timestamp: new Date().toISOString()
     });
+});
+
+/**
+ * GET /api/assessment-url
+ * Returns the screening assessment URL configured via HACKERRANK_ASSESSMENT_URL.
+ */
+app.get('/api/assessment-url', (req, res) => {
+    const rawUrl = process.env.HACKERRANK_ASSESSMENT_URL ? process.env.HACKERRANK_ASSESSMENT_URL.trim() : '';
+    const isValid = rawUrl.startsWith('http://') || rawUrl.startsWith('https://');
+
+    res.status(200).json({
+        success: true,
+        assessmentUrl: isValid ? rawUrl : null,
+        available: isValid
+    });
+});
+
+/**
+ * POST /api/sessions
+ * Initializes a new conversation session in MongoDB Atlas.
+ */
+app.post('/api/sessions', async (req, res) => {
+    try {
+        const { sessionId, metadata } = req.body;
+        if (!sessionId) {
+            return res.status(400).json({ success: false, message: 'sessionId is required' });
+        }
+
+        const dbStatus = getDBStatus();
+        if (!dbStatus.isConnected) {
+            return res.status(200).json({
+                success: true,
+                sessionId,
+                database: 'disconnected',
+                message: 'Session initialized (database offline)'
+            });
+        }
+
+        const session = await Session.findOneAndUpdate(
+            { sessionId },
+            {
+                $setOnInsert: {
+                    sessionId,
+                    createdAt: new Date(),
+                    messages: [],
+                    metadata: metadata || {}
+                }
+            },
+            { upsert: true, new: true }
+        );
+
+        res.status(201).json({
+            success: true,
+            sessionId: session.sessionId,
+            database: 'connected'
+        });
+    } catch (err) {
+        console.error('[Session Error] Failed to create session:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to create session' });
+    }
+});
+
+/**
+ * POST /api/sessions/:sessionId/messages
+ * Appends a message to the conversation session in MongoDB Atlas.
+ */
+app.post('/api/sessions/:sessionId/messages', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { sender, text, stepId } = req.body;
+
+        if (!sender || typeof text !== 'string') {
+            return res.status(400).json({ success: false, message: 'sender and text are required' });
+        }
+
+        const dbStatus = getDBStatus();
+        if (!dbStatus.isConnected) {
+            return res.status(200).json({ success: true, message: 'Message acknowledged (database offline)' });
+        }
+
+        await Session.findOneAndUpdate(
+            { sessionId },
+            {
+                $push: {
+                    messages: {
+                        sender,
+                        text,
+                        stepId: stepId || null,
+                        timestamp: new Date()
+                    }
+                },
+                $set: { updatedAt: new Date() }
+            },
+            { upsert: true }
+        );
+
+        res.status(200).json({ success: true });
+    } catch (err) {
+        console.error('[Session Message Error] Failed to append message:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to record message' });
+    }
 });
 
 // ─────────────────────────────────────────────
@@ -128,8 +238,19 @@ app.use((err, req, res, _next) => {
 // ─────────────────────────────────────────────
 // Start
 // ─────────────────────────────────────────────
-app.listen(PORT, () => {
-    console.log(`✅ Vidwath backend running → http://localhost:${PORT}`);
-    console.log(`   Health check: http://localhost:${PORT}/api/health`);
-    console.log(`   Environment:  ${process.env.NODE_ENV || 'development'}`);
-});
+async function startServer() {
+    // Attempt MongoDB Atlas connection on startup
+    try {
+        await connectDB();
+    } catch (err) {
+        console.error('[Server Notice] Starting server without active MongoDB connection.');
+    }
+
+    app.listen(PORT, () => {
+        console.log(`✅ Vidwath backend running → http://localhost:${PORT}`);
+        console.log(`   Health check: http://localhost:${PORT}/api/health`);
+        console.log(`   Environment:  ${process.env.NODE_ENV || 'development'}`);
+    });
+}
+
+startServer();

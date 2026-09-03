@@ -1270,6 +1270,25 @@ body.careers-page .careers-footer {
     background: var(--cb-primary-hover);
 }
 
+.cb-assessment-unavailable {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: var(--cb-radius-md);
+    padding: 0.6rem 0.75rem;
+    font-size: 0.76rem;
+    color: #92400E;
+    line-height: 1.4;
+}
+
+.cb-assessment-unavailable svg {
+    color: #D97706;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
 /* ==========================================================================
    RESPONSIVE MOBILE VIEWPORT (< 600px)
    ========================================================================== */

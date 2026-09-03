@@ -11,7 +11,7 @@ const BOT_CONFIG = {
     // Assistant & Company Branding
     botName: "Vidwath Assistant",
     companyName: "Vidwath",
-    logo: "./career-chatbot/assets/logo-placeholder.svg",
+    logo: "./career-chatbot/assets/bot-logo.png",
 
     // Visual theme tokens
     theme: {
@@ -60,8 +60,11 @@ const BOT_CONFIG = {
     programDuration: "3 months",
     programFeeText: "applicable 3-month program fee",
 
-    // Screening Test & Assessment Settings
-    hackerRankTestUrl: "https://www.hackerrank.com/test/demo-ai-screening",
+    // Screening Test & Assessment Settings (fetched dynamically from backend)
+    hackerRankTestUrl: null,
+    apiBaseUrl: "http://localhost:3001",
+    assessmentUrlEndpoint: "/api/assessment-url",
+    sessionsEndpoint: "/api/sessions",
 
     // Future DocuSign Backend API Integration Points (Stubs - No Secrets)
     docusignEndpoint: "/api/docusign/create-envelope",

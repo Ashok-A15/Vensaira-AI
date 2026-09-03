@@ -49,6 +49,7 @@ class CareerChatbot {
         this.isMinimized = false;
         this.selectedSkillsTemp = [];
         this.stagedResumeTemp = null;
+        this.sessionId = null;
 
         // Bindings
         this.init = this.init.bind(this);
@@ -57,6 +58,72 @@ class CareerChatbot {
         this.closeChat = this.closeChat.bind(this);
         this.minimizeChat = this.minimizeChat.bind(this);
         this.goBack = this.goBack.bind(this);
+    }
+
+    /**
+     * Generates a unique conversation session ID.
+     */
+    generateSessionId() {
+        return 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+    }
+
+    /**
+     * Asynchronously initializes the session document in the backend/MongoDB.
+     */
+    async syncSessionWithBackend() {
+        if (!this.sessionId) return;
+        try {
+            const apiBase = (this.config && this.config.apiBaseUrl) || 'http://localhost:3001';
+            const endpoint = (this.config && this.config.sessionsEndpoint) || '/api/sessions';
+            await fetch(`${apiBase}${endpoint}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionId: this.sessionId,
+                    metadata: {
+                        jobId: this.state.jobId,
+                        jobTitle: this.state.jobTitle,
+                        jobLocation: this.state.jobLocation,
+                        jobType: this.state.jobType,
+                        candidateEmail: this.state.email || null
+                    }
+                })
+            });
+        } catch (err) {
+            // Gracefully ignore if offline or disconnected
+        }
+    }
+
+    /**
+     * Asynchronously records a chat message to the active session in backend/MongoDB.
+     */
+    async logMessageToBackend(sender, text, stepId = null) {
+        if (!this.sessionId) return;
+        try {
+            const apiBase = (this.config && this.config.apiBaseUrl) || 'http://localhost:3001';
+            let messageStr = '';
+            if (typeof text === 'string') {
+                messageStr = text;
+            } else if (text && text.innerText) {
+                messageStr = text.innerText;
+            } else if (text && text.textContent) {
+                messageStr = text.textContent;
+            }
+
+            if (!messageStr) return;
+
+            await fetch(`${apiBase}/api/sessions/${encodeURIComponent(this.sessionId)}/messages`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sender,
+                    text: messageStr.trim(),
+                    stepId: stepId !== null ? String(stepId) : null
+                })
+            });
+        } catch (err) {
+            // Gracefully ignore
+        }
     }
 
     /**
@@ -100,9 +167,8 @@ class CareerChatbot {
         if (this.headerJobTitle) this.headerJobTitle.textContent = this.state.jobTitle;
         if (this.headerMeta) this.headerMeta.textContent = `${this.state.jobLocation} · ${this.state.jobType}`;
 
-        // Reset application data for new job selection
-        this.resetConversationState();
-        this.openChat();
+        // Reset application data for new job selection and start fresh session
+        this.openChat(true);
     }
 
     /**
@@ -140,6 +206,7 @@ class CareerChatbot {
         this.menuToggleBtn = document.getElementById('chatbot-menu-toggle');
         this.menuDropdown = document.getElementById('chatbot-menu-dropdown');
         this.btnStartOver = document.getElementById('cb-menu-start-over');
+        this.btnClearChat = document.getElementById('cb-menu-clear');
         this.btnCancelApp = document.getElementById('cb-menu-cancel-app');
         this.progressContainer = document.getElementById('chatbot-progress-container');
         this.progressBar = document.getElementById('chatbot-progress-bar');
@@ -148,7 +215,7 @@ class CareerChatbot {
         this.inputArea = document.getElementById('chatbot-input-area');
 
         // Populate header branding dynamically from config
-        if (this.headerLogo) this.headerLogo.src = this.config.logo || './assets/logo-placeholder.svg';
+        if (this.headerLogo) this.headerLogo.src = this.config.logo || './career-chatbot/assets/bot-logo.png';
         if (this.headerBotName) this.headerBotName.textContent = this.config.botName || 'Vidwath Assistant';
         if (this.headerCompany) this.headerCompany.textContent = this.config.companyName || 'Vidwath';
         if (this.headerJobTitle) this.headerJobTitle.textContent = this.state.jobTitle;
@@ -194,6 +261,13 @@ class CareerChatbot {
             });
         }
 
+        if (this.btnClearChat) {
+            this.btnClearChat.addEventListener('click', () => {
+                if (this.menuDropdown) this.menuDropdown.classList.remove('cb-dropdown-open');
+                this.promptClearChatConfirmation();
+            });
+        }
+
         if (this.btnCancelApp) {
             this.btnCancelApp.addEventListener('click', () => {
                 if (this.menuDropdown) this.menuDropdown.classList.remove('cb-dropdown-open');
@@ -222,8 +296,12 @@ class CareerChatbot {
 
     /**
      * Opens chatbot window.
+     * Always starts a brand new chat session if opened from closed state or if forceNewSession is requested.
+     * @param {boolean} forceNewSession
      */
-    openChat() {
+    openChat(forceNewSession = false) {
+        const wasClosed = !this.isOpen;
+
         this.isOpen = true;
         this.isMinimized = false;
         if (this.widgetContainer) {
@@ -234,7 +312,14 @@ class CareerChatbot {
             this.launcherBtn.setAttribute('aria-expanded', 'true');
         }
 
-        if (this.messagesContainer && this.messagesContainer.children.length === 0) {
+        if (wasClosed || forceNewSession || !this.sessionId) {
+            // Generate a fresh session ID
+            this.sessionId = this.generateSessionId();
+            // Clear previous messages and form state
+            this.resetConversationState();
+            // Register session in backend/MongoDB
+            this.syncSessionWithBackend();
+            // Render welcome question
             this.renderQuestion(0);
         } else {
             this.scrollToBottom();
@@ -313,7 +398,7 @@ class CareerChatbot {
             const typingBubble = document.createElement('div');
             typingBubble.className = 'cb-message cb-message-bot cb-typing-indicator';
             typingBubble.innerHTML = `
-                <div class="cb-avatar"><img src="${this.config.logo || './assets/logo-placeholder.svg'}" alt="Logo"></div>
+                <div class="cb-avatar"><img src="${this.config.logo || './career-chatbot/assets/bot-logo.png'}" alt="Logo"></div>
                 <div class="cb-bubble">
                     <span class="cb-dot"></span>
                     <span class="cb-dot"></span>
@@ -333,7 +418,7 @@ class CareerChatbot {
         
         const avatar = document.createElement('div');
         avatar.className = 'cb-avatar';
-        avatar.innerHTML = `<img src="${this.config.logo || './assets/logo-placeholder.svg'}" alt="Company Logo">`;
+        avatar.innerHTML = `<img src="${this.config.logo || './career-chatbot/assets/bot-logo.png'}" alt="Company Logo">`;
         
         const bubble = document.createElement('div');
         bubble.className = 'cb-bubble';
@@ -347,6 +432,10 @@ class CareerChatbot {
         msgDiv.appendChild(bubble);
         this.messagesContainer.appendChild(msgDiv);
         this.scrollToBottom();
+
+        // Asynchronously log bot message to active session
+        this.logMessageToBackend('bot', content, this.currentStepIndex);
+
         return msgDiv;
     }
 
@@ -366,6 +455,9 @@ class CareerChatbot {
         msgDiv.appendChild(bubble);
         this.messagesContainer.appendChild(msgDiv);
         this.scrollToBottom();
+
+        // Asynchronously log candidate message to active session
+        this.logMessageToBackend('user', text, this.currentStepIndex);
     }
 
     /**
@@ -948,8 +1040,38 @@ class CareerChatbot {
         confirmBtn.className = 'cb-btn-option cb-btn-danger';
         confirmBtn.textContent = 'Start Over';
         confirmBtn.addEventListener('click', () => {
-            this.resetConversationState();
-            this.openChat();
+            this.openChat(true);
+        });
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.type = 'button';
+        cancelBtn.className = 'cb-btn-option';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.addEventListener('click', () => {
+            this.renderQuestion(this.currentStepIndex, true);
+        });
+
+        container.appendChild(confirmBtn);
+        container.appendChild(cancelBtn);
+        this.inputArea.appendChild(container);
+    }
+
+    /**
+     * Displays confirmation popup for Clear Chat action.
+     */
+    async promptClearChatConfirmation() {
+        this.inputArea.innerHTML = '';
+        await this.appendBotMessage("Are you sure you want to clear the chat? All conversation history will be erased.");
+
+        const container = document.createElement('div');
+        container.className = 'cb-button-grid';
+
+        const confirmBtn = document.createElement('button');
+        confirmBtn.type = 'button';
+        confirmBtn.className = 'cb-btn-option cb-btn-danger';
+        confirmBtn.textContent = 'Clear Chat';
+        confirmBtn.addEventListener('click', () => {
+            this.openChat(true);
         });
 
         const cancelBtn = document.createElement('button');
@@ -1283,6 +1405,7 @@ class CareerChatbot {
 
     /**
      * Renders Screening Test & Assessment Step.
+     * Fetches configured assessment link from backend. If unavailable or empty, shows clear notice.
      */
     async proceedToAssessmentStep() {
         this.inputArea.innerHTML = '';
@@ -1290,22 +1413,66 @@ class CareerChatbot {
 
         await this.appendBotMessage("Please complete the initial screening test using the link below.");
 
-        const testUrl = this.config.hackerRankTestUrl || "https://www.hackerrank.com/test/demo-ai-screening";
+        let assessmentUrl = null;
+        let isAvailable = false;
+
+        // Query backend for configured HackerRank Assessment URL
+        try {
+            const apiBase = (this.config && this.config.apiBaseUrl) || 'http://localhost:3001';
+            const endpoint = (this.config && this.config.assessmentUrlEndpoint) || '/api/assessment-url';
+            const res = await fetch(`${apiBase}${endpoint}`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.success && data.available && data.assessmentUrl) {
+                    assessmentUrl = data.assessmentUrl;
+                    isAvailable = true;
+                }
+            }
+        } catch (err) {
+            console.warn('[Assessment Link Notice] Could not fetch assessment URL from backend:', err.message);
+        }
+
+        // Fallback: check config only if explicitly provided and NOT the legacy invalid demo slug
+        if (!isAvailable && this.config && this.config.hackerRankTestUrl && typeof this.config.hackerRankTestUrl === 'string') {
+            const trimmed = this.config.hackerRankTestUrl.trim();
+            if (trimmed && !trimmed.includes('demo-ai-screening') && (trimmed.startsWith('http://') || trimmed.startsWith('https://'))) {
+                assessmentUrl = trimmed;
+                isAvailable = true;
+            }
+        }
 
         const assessmentCard = document.createElement('div');
         assessmentCard.className = 'cb-assessment-card cb-fade-in';
-        assessmentCard.innerHTML = `
-            <div class="cb-assessment-title">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                </svg>
-                HackerRank Test
-            </div>
-            <p style="font-size: 0.74rem; color: #475569; margin: 0; line-height: 1.35;">Complete your online screening assessment to finalize your application.</p>
-            <a href="${this.escapeHtml(testUrl)}" target="_blank" rel="noopener noreferrer" class="cb-btn-assessment">
-                Open Assessment ↗
-            </a>
-        `;
+
+        if (isAvailable && assessmentUrl) {
+            assessmentCard.innerHTML = `
+                <div class="cb-assessment-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    HackerRank Test
+                </div>
+                <p style="font-size: 0.74rem; color: #475569; margin: 0; line-height: 1.35;">Complete your online screening assessment to finalize your application.</p>
+                <a href="${this.escapeHtml(assessmentUrl)}" target="_blank" rel="noopener noreferrer" class="cb-btn-assessment">
+                    Open Assessment ↗
+                </a>
+            `;
+        } else {
+            assessmentCard.innerHTML = `
+                <div class="cb-assessment-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    HackerRank Test
+                </div>
+                <div class="cb-assessment-unavailable">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <span>Assessment link is currently unavailable. Please contact the recruiting team.</span>
+                </div>
+            `;
+        }
 
         await this.appendBotMessage(assessmentCard);
 
