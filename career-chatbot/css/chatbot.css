@@ -1,0 +1,1309 @@
+/* ==========================================================================
+   CAREER CHATBOT & CAREERS PAGE STYLESHEET (Refined UI/UX)
+   Corporate, sleek, accessible design system with fixed header/footer layout,
+   independent message scrolling, 44px+ touch targets, and mobile sheet support.
+   ========================================================================== */
+
+:root {
+    /* Theme Tokens (overridden dynamically by BOT_CONFIG) */
+    --cb-primary: #0057B8;
+    --cb-primary-hover: #004390;
+    --cb-accent: #00A8FF;
+    --cb-bg: #FFFFFF;
+    --cb-text: #1F2937;
+    --cb-bot-bubble-bg: #F3F4F6;
+    --cb-bot-bubble-text: #1F2937;
+    --cb-user-bubble-bg: #0057B8;
+    --cb-user-bubble-text: #FFFFFF;
+
+    /* Design Tokens */
+    --cb-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --cb-radius-sm: 8px;
+    --cb-radius-md: 12px;
+    --cb-radius-lg: 18px;
+    --cb-radius-full: 9999px;
+    
+    /* Subtle Corporate Shadows */
+    --cb-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --cb-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --cb-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+    --cb-shadow-launcher: 0 6px 20px rgba(0, 87, 184, 0.3);
+
+    /* Micro-Transitions */
+    --cb-transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    --cb-transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scoped Reset for Chatbot Widget & Standalone Page Elements */
+#chatbot-widget, #chatbot-widget *,
+body.careers-page .careers-header, body.careers-page .careers-header *,
+body.careers-page .hero-section, body.careers-page .hero-section *,
+body.careers-page .jobs-section, body.careers-page .jobs-section *,
+body.careers-page .careers-footer, body.careers-page .careers-footer * {
+    box-sizing: border-box;
+}
+
+#chatbot-widget * {
+    font-family: var(--cb-font-family);
+}
+
+body.careers-page {
+    font-family: var(--cb-font-family);
+    color: var(--cb-text);
+    background-color: #F8FAFC;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   CAREERS PAGE LAYOUT (Scoped to standalone careers page)
+   ========================================================================== */
+
+body.careers-page .careers-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E2E8F0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+body.careers-page .header-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+body.careers-page .brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+body.careers-page .brand-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--cb-radius-sm);
+}
+
+body.careers-page .brand-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cb-text);
+    letter-spacing: -0.01em;
+}
+
+body.careers-page .nav-links {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+}
+
+body.careers-page .nav-links a {
+    text-decoration: none;
+    color: #64748B;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color var(--cb-transition-fast);
+}
+
+body.careers-page .nav-links a:hover {
+    color: var(--cb-primary);
+}
+
+/* Hero Section */
+body.careers-page .hero-section {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #FFFFFF;
+    padding: 3.5rem 1.5rem 4.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+body.careers-page .hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(0, 87, 184, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+}
+
+body.careers-page .hero-content {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+body.careers-page .hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--cb-accent);
+    padding: 0.3rem 0.9rem;
+    border-radius: var(--cb-radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+body.careers-page .hero-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+    color: #FFFFFF;
+}
+
+body.careers-page .hero-subtitle {
+    font-size: 1.1rem;
+    color: #94A3B8;
+    font-weight: 400;
+}
+
+/* Jobs Section */
+body.careers-page .jobs-section {
+    max-width: 1080px;
+    margin: -2.5rem auto 3.5rem;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+body.careers-page .jobs-header-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--cb-text);
+}
+
+body.careers-page .jobs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+body.careers-page .job-card {
+    background: #FFFFFF;
+    border-radius: var(--cb-radius-md);
+    border: 1px solid #E2E8F0;
+    padding: 1.5rem 1.75rem;
+    box-shadow: var(--cb-shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    transition: transform var(--cb-transition-fast), box-shadow var(--cb-transition-fast), border-color var(--cb-transition-fast);
+}
+
+body.careers-page .job-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--cb-shadow-md);
+    border-color: #CBD5E1;
+}
+
+body.careers-page .job-main-info {
+    flex: 1;
+}
+
+body.careers-page .job-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--cb-text);
+    margin-bottom: 0.25rem;
+}
+
+body.careers-page .job-desc {
+    font-size: 0.9rem;
+    color: #64748B;
+    margin-bottom: 0.65rem;
+}
+
+body.careers-page .job-meta-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    align-items: center;
+}
+
+body.careers-page .job-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: #64748B;
+    font-weight: 500;
+}
+
+body.careers-page .job-type-badge {
+    background: #EFF6FF;
+    color: var(--cb-primary);
+    padding: 0.18rem 0.65rem;
+    border-radius: var(--cb-radius-full);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+body.careers-page .btn-apply-page {
+    background: var(--cb-primary);
+    color: #FFFFFF;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    min-height: 44px;
+    border-radius: var(--cb-radius-md);
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 87, 184, 0.2);
+    transition: background var(--cb-transition-fast), transform var(--cb-transition-fast);
+    flex-shrink: 0;
+}
+
+body.careers-page .btn-apply-page:hover {
+    background: var(--cb-primary-hover);
+}
+
+/* Footer */
+body.careers-page .careers-footer {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border-top: 1px solid #E2E8F0;
+    color: #94A3B8;
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   FLOATING CHATBOT WIDGET STYLES
+   ========================================================================== */
+
+#chatbot-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Floating Launcher Button */
+.chatbot-launcher-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--cb-radius-full);
+    background: var(--cb-primary);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: var(--cb-shadow-launcher);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--cb-transition-fast), background var(--cb-transition-fast);
+    position: relative;
+    outline: none;
+}
+
+.chatbot-launcher-btn:hover {
+    transform: scale(1.06);
+    background: var(--cb-primary-hover);
+}
+
+.chatbot-launcher-btn:focus-visible {
+    outline: 3px solid var(--cb-accent);
+    outline-offset: 3px;
+}
+
+.chatbot-launcher-icon,
+.chatbot-close-icon {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.chatbot-close-icon {
+    position: absolute;
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+#chatbot-widget.cb-open .chatbot-launcher-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+#chatbot-widget.cb-open .chatbot-close-icon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+.cb-unread-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 11px;
+    height: 11px;
+    background: #EF4444;
+    border: 2px solid #FFFFFF;
+    border-radius: var(--cb-radius-full);
+}
+
+/* Chat Card Container (Compact Desktop: 350px x 490px, max 68vh) */
+.chatbot-card {
+    width: 350px;
+    height: 490px;
+    max-height: 68vh;
+    background: var(--cb-bg);
+    border-radius: var(--cb-radius-lg);
+    box-shadow: var(--cb-shadow-lg);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+    pointer-events: none;
+    transform-origin: bottom right;
+    transition: opacity var(--cb-transition-normal), transform var(--cb-transition-normal);
+}
+
+#chatbot-widget.cb-open .chatbot-card {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+/* Fixed Header */
+.chatbot-header {
+    background: var(--cb-primary);
+    color: #FFFFFF;
+    padding: 0.65rem 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 20;
+}
+
+.chatbot-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    overflow: hidden;
+}
+
+.chatbot-header-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--cb-radius-full);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    object-fit: cover;
+    background: #FFFFFF;
+    flex-shrink: 0;
+}
+
+.chatbot-header-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chatbot-header-bot-name {
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #FFFFFF;
+}
+
+.chatbot-header-company {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatbot-header-sub {
+    display: none !important;
+}
+
+.chatbot-header-job-title {
+    font-weight: 600;
+}
+
+.cb-header-dot {
+    opacity: 0.6;
+}
+
+.chatbot-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    flex-shrink: 0;
+}
+
+.cb-icon-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    width: 28px;
+    height: 28px;
+    border-radius: var(--cb-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--cb-transition-fast), color var(--cb-transition-fast);
+}
+
+.cb-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+}
+
+/* Header Options Dropdown Menu */
+.cb-menu-wrapper {
+    position: relative;
+}
+
+.cb-menu-dropdown {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    background: #FFFFFF;
+    border-radius: var(--cb-radius-md);
+    box-shadow: var(--cb-shadow-lg);
+    border: 1px solid #E2E8F0;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem 0;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.95);
+    pointer-events: none;
+    transition: opacity var(--cb-transition-fast), transform var(--cb-transition-fast);
+}
+
+.cb-menu-dropdown.cb-dropdown-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+.cb-menu-item {
+    background: transparent;
+    border: none;
+    padding: 0.45rem 0.8rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--cb-text);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background var(--cb-transition-fast);
+}
+
+.cb-menu-item:hover {
+    background: #F1F5F9;
+}
+
+.cb-menu-danger {
+    color: #EF4444;
+}
+
+.cb-menu-danger:hover {
+    background: #FEF2F2;
+}
+
+/* Fixed Progress Bar Header */
+.cb-progress-container {
+    background: #FFFFFF;
+    border-bottom: 1px solid #F1F5F9;
+    padding: 0.25rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.cb-progress-text {
+    font-size: 0.70rem;
+    font-weight: 600;
+    color: #64748B;
+}
+
+.cb-progress-track {
+    flex: 1;
+    height: 4px;
+    background: #E2E8F0;
+    border-radius: var(--cb-radius-full);
+    overflow: hidden;
+}
+
+.cb-progress-bar {
+    height: 100%;
+    background: var(--cb-primary);
+    border-radius: var(--cb-radius-full);
+    transition: width var(--cb-transition-normal);
+}
+
+/* Independent Scrollable Conversation Area */
+.chatbot-messages {
+    flex: 1;
+    min-height: 0;
+    padding: 0.75rem 0.85rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: #FAFAFA;
+    scroll-behavior: smooth;
+}
+
+.chatbot-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: var(--cb-radius-full);
+}
+
+/* Bot & User Chat Bubbles */
+.cb-message {
+    display: flex;
+    gap: 0.45rem;
+    line-height: 1.4;
+    font-size: 0.84rem;
+}
+
+.cb-message-bot {
+    align-self: flex-start;
+    max-width: 85%;
+}
+
+.cb-message-user {
+    align-self: flex-end;
+    max-width: 80%;
+    flex-direction: row-reverse;
+}
+
+.cb-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: var(--cb-radius-full);
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid #E2E8F0;
+}
+
+.cb-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cb-bubble {
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--cb-radius-md);
+    box-shadow: var(--cb-shadow-sm);
+    word-break: break-word;
+}
+
+.cb-message-bot .cb-bubble {
+    background: var(--cb-bot-bubble-bg);
+    color: var(--cb-bot-bubble-text);
+    border-top-left-radius: 4px;
+}
+
+.cb-message-user .cb-bubble {
+    background: var(--cb-user-bubble-bg);
+    color: var(--cb-user-bubble-text);
+    border-top-right-radius: 4px;
+}
+
+/* Typing Indicator */
+.cb-typing-indicator .cb-bubble {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.6rem 0.75rem;
+}
+
+.cb-dot {
+    width: 5px;
+    height: 5px;
+    background: #94A3B8;
+    border-radius: 50%;
+    animation: cb-bounce 1.4s infinite ease-in-out both;
+}
+
+.cb-dot:nth-child(1) { animation-delay: -0.32s; }
+.cb-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes cb-bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+.cb-fade-in {
+    animation: cb-fade-in 0.25s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+@keyframes cb-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fixed Current Question / Input Area */
+.chatbot-input-area {
+    background: #FFFFFF;
+    border-top: 1px solid #E2E8F0;
+    padding: 0.65rem 0.85rem;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Back Button */
+.cb-btn-back {
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #CBD5E1;
+    padding: 0.35rem 0.7rem;
+    min-height: 34px;
+    border-radius: var(--cb-radius-md);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    transition: background var(--cb-transition-fast), color var(--cb-transition-fast);
+}
+
+.cb-btn-back:hover {
+    background: #E2E8F0;
+    color: var(--cb-text);
+}
+
+/* Text Input Forms */
+.cb-input-wrapper {
+    width: 100%;
+}
+
+.cb-text-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+}
+
+.cb-input-field-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: 100%;
+}
+
+.cb-input-text {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    min-height: 38px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: var(--cb-radius-md);
+    font-size: 0.84rem;
+    font-family: inherit;
+    color: var(--cb-text);
+    outline: none;
+    transition: border-color var(--cb-transition-fast), box-shadow var(--cb-transition-fast);
+}
+
+.cb-input-text:focus {
+    border-color: var(--cb-primary);
+    box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.12);
+}
+
+.cb-input-text.cb-input-invalid {
+    border-color: #DC2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.cb-input-error-msg {
+    color: #DC2626;
+    font-size: 0.74rem;
+    font-weight: 500;
+    margin-top: 0.15rem;
+}
+
+.cb-btn-continue {
+    min-height: 38px;
+    padding: 0 0.85rem;
+}
+
+.cb-input-actions-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.2rem;
+}
+
+/* Vertical Button Grid for Choice Questions */
+.cb-button-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.cb-button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 100%;
+}
+
+.cb-btn-option {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    min-height: 38px;
+    background: #F1F5F9;
+    color: var(--cb-text);
+    border: 1px solid #E2E8F0;
+    border-radius: var(--cb-radius-md);
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: center;
+    transition: background var(--cb-transition-fast), border-color var(--cb-transition-fast);
+}
+
+.cb-btn-option:hover {
+    background: #E2E8F0;
+    border-color: var(--cb-primary);
+    color: var(--cb-primary);
+}
+
+.cb-btn-welcome {
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+    color: var(--cb-primary);
+}
+
+.cb-btn-welcome:hover {
+    background: var(--cb-primary);
+    color: #FFFFFF;
+}
+
+.cb-btn-danger {
+    background: #FEF2F2;
+    color: #EF4444;
+    border-color: #FCA5A5;
+}
+
+.cb-btn-danger:hover {
+    background: #EF4444;
+    color: #FFFFFF;
+    border-color: #EF4444;
+}
+
+/* Multi-select Skills Grid */
+.cb-multiselect-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+}
+
+.cb-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    max-height: 115px;
+    overflow-y: auto;
+    padding: 0.1rem;
+}
+
+.cb-skill-pill {
+    background: #F1F5F9;
+    border: 1.5px solid #CBD5E1;
+    color: var(--cb-text);
+    padding: 0.25rem 0.6rem;
+    min-height: 32px;
+    border-radius: var(--cb-radius-full);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--cb-transition-fast);
+}
+
+.cb-skill-pill:hover {
+    border-color: var(--cb-primary);
+}
+
+.cb-skill-pill.cb-selected {
+    background: var(--cb-primary);
+    color: #FFFFFF;
+    border-color: var(--cb-primary);
+}
+
+.cb-multiselect-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cb-btn-primary {
+    background: var(--cb-primary);
+    color: #FFFFFF;
+    border: none;
+    padding: 0.5rem 0.95rem;
+    min-height: 38px;
+    border-radius: var(--cb-radius-md);
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--cb-transition-fast);
+}
+
+.cb-btn-primary:hover {
+    background: var(--cb-primary-hover);
+}
+
+/* Resume File Dropzone */
+.cb-file-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+}
+
+.cb-file-dropzone {
+    border: 2px dashed #CBD5E1;
+    border-radius: var(--cb-radius-md);
+    padding: 0.65rem;
+    text-align: center;
+    background: #F8FAFC;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    transition: border-color var(--cb-transition-fast), background var(--cb-transition-fast);
+}
+
+.cb-file-dropzone:hover {
+    border-color: var(--cb-primary);
+    background: #EFF6FF;
+}
+
+.cb-file-dropzone svg {
+    color: var(--cb-primary);
+}
+
+.cb-file-input {
+    display: none;
+}
+
+.cb-drop-text {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--cb-text);
+}
+
+.cb-drop-hint {
+    font-size: 0.68rem;
+    color: #64748B;
+}
+
+.cb-file-preview-card {
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--cb-radius-md);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cb-file-info {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    overflow: hidden;
+}
+
+.cb-file-icon {
+    color: var(--cb-primary);
+    flex-shrink: 0;
+}
+
+.cb-file-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.cb-file-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cb-file-size {
+    font-size: 0.68rem;
+    color: #64748B;
+}
+
+.cb-btn-remove-file {
+    background: transparent;
+    border: none;
+    color: #EF4444;
+    font-size: 0.74rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cb-file-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Review Screen Card */
+.cb-review-wrapper {
+    width: 100%;
+}
+
+.cb-review-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--cb-radius-md);
+    padding: 0.6rem;
+    width: 100%;
+}
+
+.cb-review-section-title {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--cb-primary);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+    border-bottom: 1.5px solid #EFF6FF;
+    padding-bottom: 0.12rem;
+}
+
+.cb-review-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cb-review-row {
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid #F8FAFC;
+}
+
+.cb-review-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.cb-review-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cb-review-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.cb-btn-edit {
+    background: transparent;
+    border: none;
+    color: var(--cb-primary);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 4px;
+    transition: background var(--cb-transition-fast);
+}
+
+.cb-btn-edit:hover {
+    background: #EFF6FF;
+}
+
+.cb-review-value {
+    font-size: 0.78rem;
+    color: var(--cb-text);
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* Submit Container */
+.cb-submit-container {
+    width: 100%;
+}
+
+.cb-btn-submit {
+    width: 100%;
+    padding: 0.6rem;
+    min-height: 38px;
+    font-size: 0.86rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.cb-btn-submit:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+.cb-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #FFFFFF;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: cb-spin 0.8s linear infinite;
+}
+
+@keyframes cb-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Success Screen Box */
+.cb-success-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+}
+
+.cb-success-heading {
+    font-size: 1rem;
+    color: #10B981;
+    font-weight: 700;
+}
+
+.cb-success-subtext {
+    font-size: 0.78rem;
+    color: #64748B;
+    margin-top: 0.2rem;
+}
+
+/* Agreement & Consent Document Card */
+.cb-agreement-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--cb-radius-md);
+    padding: 0.65rem;
+    font-size: 0.78rem;
+    color: var(--cb-text);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    width: 100%;
+}
+
+.cb-agreement-header {
+    border-bottom: 1.5px solid #EFF6FF;
+    padding-bottom: 0.25rem;
+}
+
+.cb-agreement-title {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--cb-primary);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.cb-agreement-subtitle {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #1E293B;
+    margin-top: 0.1rem;
+}
+
+.cb-agreement-body {
+    max-height: 130px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+    color: #334155;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.74rem;
+}
+
+.cb-agreement-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.cb-agreement-body::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: var(--cb-radius-full);
+}
+
+.cb-acceptance-box {
+    background: #F8FAFC;
+    border: 1.5px solid #CBD5E1;
+    border-radius: var(--cb-radius-md);
+    padding: 0.55rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.cb-acceptance-title {
+    font-size: 0.66rem;
+    font-weight: 800;
+    color: var(--cb-primary);
+    letter-spacing: 0.04em;
+}
+
+.cb-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #0F172A;
+    cursor: pointer;
+    line-height: 1.35;
+}
+
+.cb-checkbox-label input[type="checkbox"] {
+    margin-top: 2px;
+    width: 14px;
+    height: 14px;
+    accent-color: var(--cb-primary);
+    cursor: pointer;
+}
+
+.cb-acceptance-details {
+    border-top: 1px dashed #CBD5E1;
+    padding-top: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    font-size: 0.70rem;
+    color: #475569;
+}
+
+.cb-signature-note {
+    color: #64748B;
+    font-style: italic;
+}
+
+/* Assessment Card */
+.cb-assessment-card {
+    background: #FFFFFF;
+    border: 1.5px solid #BFDBFE;
+    border-radius: var(--cb-radius-md);
+    padding: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    width: 100%;
+}
+
+.cb-assessment-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--cb-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.cb-btn-assessment {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    background: var(--cb-primary);
+    color: #FFFFFF !important;
+    text-decoration: none;
+    padding: 0.5rem 0.8rem;
+    min-height: 36px;
+    border-radius: var(--cb-radius-md);
+    font-size: 0.80rem;
+    font-weight: 600;
+    transition: background var(--cb-transition-fast);
+}
+
+.cb-btn-assessment:hover {
+    background: var(--cb-primary-hover);
+}
+
+/* ==========================================================================
+   RESPONSIVE MOBILE VIEWPORT (< 600px)
+   ========================================================================== */
+
+@media (max-width: 600px) {
+    #chatbot-widget {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        top: 0;
+        align-items: stretch;
+    }
+
+    .chatbot-card {
+        width: 100%;
+        height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .job-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.25rem;
+    }
+
+    .btn-apply-page {
+        width: 100%;
+        text-align: center;
+    }
+}
