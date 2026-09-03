@@ -5,9 +5,19 @@ desktop.ini
 
 # Logs & Temp
 *.log
+logs/
+npm-debug.log*
+
+# Secrets & Environment – NEVER commit these
 .env
+**/.env
+.env.*
+!.env.example
+
+# Editor & IDE directories
 .vscode/
 .idea/
 
-# Node
+# Dependencies
 node_modules/
+**/node_modules/
