@@ -204,18 +204,56 @@ function initMobileMenu() {
 function initContactForm() {
   const form = document.getElementById('contact-form') || document.getElementById('contact-cream-form');
   const successMsg = document.getElementById('contact-success-msg') || document.getElementById('contact-cream-success');
+  const errorMsg = document.getElementById('contact-cream-error');
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
   if (!form || !successMsg) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    successMsg.classList.add('show');
-    form.reset();
+    
+    if (successMsg) successMsg.classList.remove('show');
+    if (errorMsg) errorMsg.classList.remove('show');
 
-    // Smooth scroll to success message
-    successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (submitBtn) {
+      submitBtn.dataset.originalText = submitBtn.innerText;
+      submitBtn.innerText = 'Sending...';
+      submitBtn.disabled = true;
+    }
 
-    setTimeout(() => {
-      successMsg.classList.remove('show');
-    }, 7000);
+    try {
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        successMsg.classList.add('show');
+        form.reset();
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setTimeout(() => {
+          successMsg.classList.remove('show');
+        }, 7000);
+      } else {
+        if (errorMsg) {
+          errorMsg.classList.add('show');
+          errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    } catch (error) {
+      if (errorMsg) {
+        errorMsg.classList.add('show');
+        errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.innerText = submitBtn.dataset.originalText || 'Send message';
+        submitBtn.disabled = false;
+      }
+    }
   });
 }
