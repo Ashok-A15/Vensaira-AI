@@ -12,121 +12,140 @@ export default function Signup() {
     confirmPassword: ''
   });
   const [error, setError] = useState('');
-  
+  const [loading, setLoading] = useState(false);
+
   const { signup } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     const { firstName, lastName, email, password, confirmPassword } = formData;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      setError('Please fill in all fields');
-      return;
-    }
-    
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address');
+      setError('Please fill in all fields.');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('Passwords do not match.');
       return;
     }
 
+    setLoading(true);
     const success = await signup({ firstName, lastName, email, password });
+    setLoading(false);
+
     if (success) {
       navigate('/elearning/dashboard');
     }
   };
 
   return (
-    <div className="elearning-page auth-container" style={{ paddingBottom: '120px' }}>
-      <div className="auth-card">
-        <h1 className="auth-title">Create Your Account</h1>
-        <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '24px' }}>
-          Start your learning journey with VENSAIRA AI.
-        </p>
-        <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div className="form-group">
-              <label className="form-label" htmlFor="firstName">First Name</label>
-              <input 
-                type="text" 
-                id="firstName" 
-                className="form-input" 
+    <div className="el-auth-page">
+      <div className="el-auth-card" style={{ maxWidth: '520px' }}>
+
+        <div className="el-auth-header">
+          <Link to="/elearning" className="el-auth-brand">
+            VENSAIRA AI <span>eLearning</span>
+          </Link>
+          <h1 className="el-auth-title">Create Your Learning Account</h1>
+          <p className="el-auth-subtitle">
+            Start building practical technology skills with Vensaira AI eLearning.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="el-form-row">
+            <div className="el-form-group">
+              <label className="el-form-label" htmlFor="firstName">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                className="el-form-input"
                 value={formData.firstName}
                 onChange={handleChange}
+                placeholder="Jane"
+                autoComplete="given-name"
               />
             </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="lastName">Last Name</label>
-              <input 
-                type="text" 
-                id="lastName" 
-                className="form-input" 
+            <div className="el-form-group">
+              <label className="el-form-label" htmlFor="lastName">Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                className="el-form-input"
                 value={formData.lastName}
                 onChange={handleChange}
+                placeholder="Doe"
+                autoComplete="family-name"
               />
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="email">Email Address</label>
-            <input 
-              type="email" 
-              id="email" 
-              className="form-input" 
+          <div className="el-form-group">
+            <label className="el-form-label" htmlFor="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              className="el-form-input"
               value={formData.email}
               onChange={handleChange}
               placeholder="you@example.com"
-            />
-          </div>
-          
-          <div className="form-group">
-            <label className="form-label" htmlFor="password">Password</label>
-            <input 
-              type="password" 
-              id="password" 
-              className="form-input" 
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
+              autoComplete="email"
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
-            <input 
-              type="password" 
-              id="confirmPassword" 
-              className="form-input" 
+          <div className="el-form-group">
+            <label className="el-form-label" htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              className="el-form-input"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Choose a strong password"
+              autoComplete="new-password"
+            />
+          </div>
+
+          <div className="el-form-group">
+            <label className="el-form-label" htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              className="el-form-input"
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="••••••••"
+              autoComplete="new-password"
             />
           </div>
-          
-          {error && <span className="auth-error">{error}</span>}
-          
-          <button type="submit" className="auth-btn">
-            Create Account
+
+          {error && (
+            <div className="el-form-error" role="alert">{error}</div>
+          )}
+
+          <button
+            type="submit"
+            className="el-btn el-btn-full"
+            disabled={loading}
+            aria-busy={loading}
+          >
+            {loading ? 'Creating Account…' : 'Create Account →'}
           </button>
         </form>
-        
-        <div className="auth-link">
-          Already have an account? <Link to="/elearning/login">Sign In</Link>
-        </div>
+
+        <p className="el-auth-switch">
+          Already have an account?{' '}
+          <Link to="/elearning/login">Login &rarr;</Link>
+        </p>
+
       </div>
     </div>
   );

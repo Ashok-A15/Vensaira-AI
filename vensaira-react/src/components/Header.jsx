@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import '../styles/header.css';
 
 const AI_SOLUTIONS_ITEMS = [
-  { label: 'AI & Machine Learning', href: '/#ai-solutions' },
-  { label: 'Generative AI & LLMs', href: '/#ai-solutions' },
-  { label: 'Agentic AI', href: '/#ai-solutions' },
-  { label: 'AI Chatbots', href: '/#ai-solutions' },
-  { label: 'Conversational AI', href: '/#ai-solutions' },
-  { label: 'Quantum Machine Learning', href: '/#ai-solutions' },
-  { label: 'AI eLearning', href: '/elearning' },
+  { label: 'AI & Machine Learning', href: '/ai-solutions/ai-machine-learning' },
+  { label: 'Generative AI & LLMs', href: '/ai-solutions/generative-ai-llms' },
+  { label: 'Agentic AI', href: '/ai-solutions/agentic-ai' },
+  { label: 'AI Chatbots', href: '/ai-solutions/ai-chatbots' },
+  { label: 'Conversational AI', href: '/ai-solutions/conversational-ai' },
+  { label: 'Quantum Machine Learning', href: '/ai-solutions/quantum-machine-learning' },
+  { label: 'AI eLearning', href: '/ai-solutions/ai-elearning' },
 ];
 
 export default function Header() {

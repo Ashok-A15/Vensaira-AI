@@ -1,15 +1,11 @@
 import { useEffect } from 'react';
 import Hero from '../components/Hero';
 import AISolutions from '../components/AISolutions';
-import Approach from '../components/Approach';
-import WhyVensaira from '../components/WhyVensaira';
+import About from '../components/About';
 import Industries from '../components/Industries';
 import Innovation from '../components/Innovation';
 import ELearning from '../components/ELearning';
 import Customers from '../components/Customers';
-import About from '../components/About';
-import TechnologyFocus from '../components/TechnologyFocus';
-import ContactCTA from '../components/ContactCTA';
 
 export default function Home() {
   useEffect(() => {
@@ -20,15 +16,11 @@ export default function Home() {
     <main id="main-content">
       <Hero />
       <AISolutions />
-      <Approach />
-      <WhyVensaira />
+      <About />
       <Industries />
       <Innovation />
       <ELearning />
       <Customers />
-      <About />
-      <TechnologyFocus />
-      <ContactCTA />
     </main>
   );
 }

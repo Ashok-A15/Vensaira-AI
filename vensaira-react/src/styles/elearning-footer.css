@@ -1,0 +1,125 @@
+/* ========================================
+   eLEARNING FOOTER STYLES
+   ======================================== */
+
+.el-footer {
+  background-color: #0B1F3A;
+  color: #CBD5E1;
+  padding: 72px 0 0;
+  font-family: inherit;
+}
+
+.el-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Grid Layout ── */
+.el-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 1024px) {
+  .el-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .el-footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .el-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* ── Brand Column ── */
+.el-footer-brand {}
+
+.el-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.el-footer-logo-text {
+  font-size: 18px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.el-footer-logo-text span {
+  color: #3B82F6;
+}
+
+.el-footer-tagline {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #94A3B8;
+  max-width: 300px;
+}
+
+/* ── Link Columns ── */
+.el-footer-col-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.el-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.el-footer-links a {
+  color: #94A3B8;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.el-footer-links a:hover {
+  color: #3B82F6;
+}
+
+/* ── Divider ── */
+.el-footer-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Bottom Bar ── */
+.el-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  font-size: 13px;
+  color: #64748B;
+}
+
+@media (max-width: 600px) {
+  .el-footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}

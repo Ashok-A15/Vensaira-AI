@@ -1,3 +1,156 @@
+/* ── Corporate Image Services Grid (Our Services) ── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 60px;
+}
+
+.service-image-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.service-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  
+  /* Initial hidden state for scroll reveal */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-image-card.in-view .service-image-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* Hover state on the image */
+.service-image-card:hover .service-cover-img {
+  transform: scale(1.04);
+}
+
+/* Overlapping White Panel */
+.service-panel {
+  position: relative;
+  width: 88%;
+  margin: -60px auto 0; /* Overlaps bottom of image */
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  border: 1px solid #F1F5F9;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  
+  /* Initial hidden state for scroll reveal */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.service-image-card.in-view .service-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover state on the panel */
+.service-image-card.in-view:hover .service-panel {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+}
+
+.sp-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.sp-desc {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.sp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1769D1;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.sp-link .sc-arrow {
+  transition: transform 0.3s ease;
+}
+
+.service-image-card:hover .sp-link .sc-arrow {
+  transform: translateX(4px);
+}
+
+/* ── Corporate Headings ── */
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--font-heading, inherit);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #1769D1;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.corporate-title {
+  font-size: clamp(32px, 4vw, 42px);
+  color: #0F172A;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.corporate-desc {
+  font-size: 1.1rem;
+  color: #475569;
+}
+
+/* Responsive grid overrides for services */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  .service-panel {
+    width: 92%;
+    margin-top: -40px;
+    padding: 24px;
+  }
+}
+
 /* ── WWD Cards (AI Solutions) ── */
 .what-we-do-grid {
   display: grid;
@@ -66,65 +219,7 @@
   line-height: 1.65;
 }
 
-/* ── Value Cards (Why Vensaira, Innovation) ── */
-.value-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-md);
-  padding: 32px 28px;
-  transition: var(--transition-normal);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 2px 10px rgba(24, 32, 39, 0.06);
-}
 
-.value-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(8, 120, 201, 0.35);
-  box-shadow: 0 14px 32px rgba(24, 32, 39, 0.10), 0 0 16px rgba(8, 120, 201, 0.08);
-}
-
-.value-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: rgba(8, 120, 201, 0.08);
-  border: 1px solid rgba(8, 120, 201, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--electric-blue);
-  margin-bottom: 6px;
-  transition: background 0.3s, box-shadow 0.3s;
-}
-
-.value-card:hover .value-icon {
-  background: rgba(8, 120, 201, 0.14);
-  box-shadow: 0 0 10px rgba(0, 191, 255, 0.18);
-}
-
-.value-subtitle {
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: var(--electric-blue);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.value-title {
-  color: var(--text-dark);
-  font-size: 1.15rem;
-  font-weight: 700;
-  font-family: var(--font-heading);
-}
-
-.value-text {
-  color: var(--text-secondary);
-  font-size: 0.94rem;
-  line-height: 1.6;
-  margin-top: 4px;
-}
 
 /* ── Industry Cards ── */
 .industry-card {

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -6,6 +6,31 @@ import Home from './pages/Home';
 import Contact from './pages/Contact';
 import MissionVision from './pages/MissionVision';
 import { AuthProvider } from './context/AuthContext';
+
+import SoftwareEngineeringPage from './pages/services/SoftwareEngineeringPage';
+import AiMachineLearningPage from './pages/services/AiMachineLearningPage';
+import CloudInfrastructurePage from './pages/services/CloudInfrastructurePage';
+import DataIntelligencePage from './pages/services/DataIntelligencePage';
+import DigitalSolutionsPage from './pages/services/DigitalSolutionsPage';
+import AutomationIntegrationPage from './pages/services/AutomationIntegrationPage';
+
+import AiSolutionsLanding from './pages/AiSolutionsLanding';
+import GenerativeAiPage from './pages/services/GenerativeAiPage';
+import AgenticAiPage from './pages/services/AgenticAiPage';
+import AiChatbotsPage from './pages/services/AiChatbotsPage';
+import ConversationalAiPage from './pages/services/ConversationalAiPage';
+import QuantumMachineLearningPage from './pages/services/QuantumMachineLearningPage';
+import AiElearningPage from './pages/services/AiElearningPage';
+
+import HealthcarePage from './pages/industries/HealthcarePage';
+import EducationPage from './pages/industries/EducationPage';
+import LogisticsPage from './pages/industries/LogisticsPage';
+import FinancialServicesPage from './pages/industries/FinancialServicesPage';
+import RetailEcommercePage from './pages/industries/RetailEcommercePage';
+import ManufacturingPage from './pages/industries/ManufacturingPage';
+import TechnologySaasPage from './pages/industries/TechnologySaasPage';
+import ProfessionalServicesPage from './pages/industries/ProfessionalServicesPage';
+
 import ELearningHome from './pages/elearning/ELearningHome';
 import Courses from './pages/elearning/Courses';
 import AboutElearning from './pages/elearning/AboutElearning';
@@ -89,6 +114,34 @@ function AppInner() {
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/mission-vision" element={<MissionVision />} />
+        
+        {/* Services Routes */}
+        <Route path="/services/software-engineering" element={<SoftwareEngineeringPage />} />
+        <Route path="/services/ai-machine-learning" element={<Navigate to="/ai-solutions/ai-machine-learning" replace />} />
+        <Route path="/services/cloud-infrastructure" element={<CloudInfrastructurePage />} />
+        <Route path="/services/data-intelligence" element={<DataIntelligencePage />} />
+        <Route path="/services/digital-solutions" element={<DigitalSolutionsPage />} />
+        <Route path="/services/automation-integration" element={<AutomationIntegrationPage />} />
+        
+        {/* AI Solutions Routes */}
+        <Route path="/ai-solutions" element={<AiSolutionsLanding />} />
+        <Route path="/ai-solutions/ai-machine-learning" element={<AiMachineLearningPage />} />
+        <Route path="/ai-solutions/generative-ai-llms" element={<GenerativeAiPage />} />
+        <Route path="/ai-solutions/agentic-ai" element={<AgenticAiPage />} />
+        <Route path="/ai-solutions/ai-chatbots" element={<AiChatbotsPage />} />
+        <Route path="/ai-solutions/conversational-ai" element={<ConversationalAiPage />} />
+        <Route path="/ai-solutions/quantum-machine-learning" element={<QuantumMachineLearningPage />} />
+        <Route path="/ai-solutions/ai-elearning" element={<AiElearningPage />} />
+        
+        {/* Industries Routes */}
+        <Route path="/industries/healthcare" element={<HealthcarePage />} />
+        <Route path="/industries/education" element={<EducationPage />} />
+        <Route path="/industries/logistics" element={<LogisticsPage />} />
+        <Route path="/industries/financial-services" element={<FinancialServicesPage />} />
+        <Route path="/industries/retail-ecommerce" element={<RetailEcommercePage />} />
+        <Route path="/industries/manufacturing" element={<ManufacturingPage />} />
+        <Route path="/industries/technology-saas" element={<TechnologySaasPage />} />
+        <Route path="/industries/professional-services" element={<ProfessionalServicesPage />} />
         
         {/* eLearning Routes */}
         <Route path="/elearning" element={<ELearningHome />} />
