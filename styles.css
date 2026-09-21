@@ -1262,9 +1262,11 @@ h4 {
     flex-wrap: wrap;
     gap: 40px;
   }
+
   .timeline-step {
     flex: 1 1 calc(50% - 20px);
   }
+
   .timeline-container::before {
     display: none;
   }
@@ -1339,19 +1341,23 @@ h4 {
     flex-direction: column;
     gap: 20px;
   }
+
   .timeline-step {
     flex: 1 1 100%;
     width: 100%;
     align-items: center;
     text-align: center;
   }
+
   .timeline-number-container {
     justify-content: center;
     margin-bottom: 12px;
   }
+
   .timeline-number {
     margin-right: 0;
   }
+
   .timeline-step:not(:last-child)::after {
     content: '↓';
     display: block;
@@ -1875,13 +1881,11 @@ h4 {
 /* ── 1. Page Background & Right-Side Soft Light Blue Gradient ── */
 .page-home {
   background-color: #F7F4EE !important;
-  background-image: radial-gradient(
-    ellipse 85% 75% at 90% 35%,
-    rgba(167, 199, 210, 0.45) 0%,
-    rgba(167, 199, 210, 0.22) 40%,
-    rgba(247, 244, 238, 0.6) 70%,
-    #F7F4EE 100%
-  ) !important;
+  background-image: radial-gradient(ellipse 85% 75% at 90% 35%,
+      rgba(167, 199, 210, 0.45) 0%,
+      rgba(167, 199, 210, 0.22) 40%,
+      rgba(247, 244, 238, 0.6) 70%,
+      #F7F4EE 100%) !important;
   background-attachment: fixed;
 }
 
@@ -1995,7 +1999,8 @@ h4 {
 /* ── 6. Hero Section Adjustments ── */
 .page-home .hero-section {
   padding-top: calc(72px + 48px);
-  background-image: none; /* using page-home ambient background */
+  background-image: none;
+  /* using page-home ambient background */
 }
 
 .page-home .hero-main-title {
@@ -2126,7 +2131,7 @@ h4 {
     pointer-events: auto;
     display: none;
   }
-  
+
   .nav-dropdown:hover .dropdown-menu,
   .nav-dropdown:focus-within .dropdown-menu,
   .nav-dropdown.active .dropdown-menu {
@@ -2137,7 +2142,8 @@ h4 {
     padding-left: 30px;
     font-size: 0.9rem;
   }
-}
+}
+
 
 /* NEW CUSTOM STYLES ADDED FOR VENSAIRA AI INNOVATIONS CONTENT UPDATE */
 

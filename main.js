@@ -96,7 +96,7 @@ function initHeroCanvas() {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          
+
           const gradient = ctx.createLinearGradient(
             particles[i].x, particles[i].y,
             particles[j].x, particles[j].y
@@ -125,7 +125,7 @@ function initHeroCanvas() {
   }
 
   window.addEventListener('resize', resize);
-  
+
   canvas.parentElement.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
@@ -211,7 +211,7 @@ function initContactForm() {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     if (successMsg) successMsg.classList.remove('show');
     if (errorMsg) errorMsg.classList.remove('show');
 
