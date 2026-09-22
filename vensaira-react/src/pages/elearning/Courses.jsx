@@ -73,7 +73,7 @@ export default function Courses() {
                 </div>
 
                 <Link to={`/elearning/courses/${course.id}`} className="el-card-btn">
-                  View Course &rarr;
+                  Explore Course &rarr;
                 </Link>
               </div>
 

@@ -31,8 +31,8 @@ import ManufacturingPage from './pages/industries/ManufacturingPage';
 import TechnologySaasPage from './pages/industries/TechnologySaasPage';
 import ProfessionalServicesPage from './pages/industries/ProfessionalServicesPage';
 
-import ELearningHome from './pages/elearning/ELearningHome';
 import Courses from './pages/elearning/Courses';
+import Projects from './pages/elearning/Projects';
 import AboutElearning from './pages/elearning/AboutElearning';
 import CourseDetails from './pages/elearning/CourseDetails';
 import Login from './pages/elearning/Login';
@@ -144,15 +144,16 @@ function AppInner() {
         <Route path="/industries/professional-services" element={<ProfessionalServicesPage />} />
         
         {/* eLearning Routes */}
-        <Route path="/elearning" element={<ELearningHome />} />
+        <Route path="/elearning" element={<Navigate to="/elearning/courses" replace />} />
         <Route path="/elearning/courses" element={<Courses />} />
-        <Route path="/elearning/about" element={<AboutElearning />} />
+        <Route path="/elearning/courses/:courseId" element={<CourseDetails />} />
+        <Route path="/elearning/projects" element={<Projects />} />
         <Route path="/elearning/login" element={<Login />} />
         <Route path="/elearning/signup" element={<Signup />} />
         <Route path="/elearning/dashboard" element={<Dashboard />} />
         <Route path="/elearning/account" element={<Account />} />
+        <Route path="/elearning/about" element={<AboutElearning />} />
         <Route path="/elearning/contact" element={<ElearningContact />} />
-        <Route path="/elearning/courses/:courseId" element={<CourseDetails />} />
 
         {/* Fallback */}
         <Route path="*" element={<Home />} />

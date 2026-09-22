@@ -11,7 +11,7 @@ export default function ElearningFooter() {
 
           {/* Brand Column */}
           <div className="el-footer-brand">
-            <Link to="/elearning" className="el-footer-logo" aria-label="Vensaira eLearning Home">
+            <Link to="/elearning/courses" className="el-footer-logo" aria-label="Vensaira eLearning">
               <span className="el-footer-logo-text">
                 VENSAIRA AI <span>eLearning</span>
               </span>
@@ -25,8 +25,8 @@ export default function ElearningFooter() {
           <div>
             <h4 className="el-footer-col-title">Platform</h4>
             <ul className="el-footer-links">
-              <li><Link to="/elearning">Home</Link></li>
               <li><Link to="/elearning/courses">Courses</Link></li>
+              <li><Link to="/elearning/projects">Projects</Link></li>
               <li><Link to="/elearning/dashboard">Dashboard</Link></li>
             </ul>
           </div>

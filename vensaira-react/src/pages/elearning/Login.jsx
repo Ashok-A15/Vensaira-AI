@@ -40,7 +40,7 @@ export default function Login() {
       <div className="el-auth-card">
 
         <div className="el-auth-header">
-          <Link to="/elearning" className="el-auth-brand">
+          <Link to="/elearning/courses" className="el-auth-brand">
             VENSAIRA AI <span>eLearning</span>
           </Link>
           <h1 className="el-auth-title">Welcome Back</h1>

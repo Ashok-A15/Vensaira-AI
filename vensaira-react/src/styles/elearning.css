@@ -373,3 +373,133 @@
 .el-auth-switch a:hover {
   text-decoration: underline;
 }
+
+/* ── eLearning Navbar Styles ── */
+.el-navbar {
+  position: sticky;
+  top: 0;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--el-border);
+  z-index: 1000;
+  padding: 0 24px;
+}
+
+.el-navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.el-nav-menu-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.el-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.el-nav-item {
+  color: var(--el-navy);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 8px 0;
+  position: relative;
+}
+
+.el-nav-item:hover,
+.el-nav-item.active {
+  color: var(--el-blue);
+}
+
+.el-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--el-blue);
+  border-radius: 1px;
+}
+
+.el-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.el-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--el-navy);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 820px) {
+  .el-mobile-toggle {
+    display: flex;
+  }
+
+  .el-nav-menu-wrapper {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--el-border);
+    box-shadow: 0 10px 24px rgba(11, 31, 58, 0.08);
+    display: none;
+    flex-direction: column;
+    padding: 20px 24px 28px;
+    gap: 20px;
+    z-index: 999;
+  }
+
+  .el-nav-menu-wrapper.open {
+    display: flex;
+  }
+
+  .el-nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .el-nav-item {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .el-nav-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--el-border);
+  }
+
+  .el-nav-actions .el-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}

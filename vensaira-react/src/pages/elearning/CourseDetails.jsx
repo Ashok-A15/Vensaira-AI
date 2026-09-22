@@ -35,7 +35,7 @@ export default function CourseDetails() {
     return (
       <div className="elearning-layout" style={{ padding: '160px 0', textAlign: 'center' }}>
         <h1 style={{ fontSize: '32px', color: 'var(--el-navy)' }}>Course Not Found</h1>
-        <button onClick={() => navigate('/elearning')} className="el-btn" style={{ marginTop: '24px' }}>
+        <button onClick={() => navigate('/elearning/courses')} className="el-btn" style={{ marginTop: '24px' }}>
           Back to Courses
         </button>
       </div>

@@ -58,7 +58,15 @@ export default function Header() {
     <header className={`navbar${scrolled ? ' scrolled' : ''}`} id="navbar">
       <div className="navbar-container">
         {/* Logo */}
-        <Link to="/" className="brand-logo" aria-label="VENSAIRA AI Home">
+        <Link
+          to="/"
+          className="brand-logo"
+          aria-label="Vensaira AI Innovations Home"
+          onClick={() => {
+            setMobileOpen(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <img src="/assets/logo-header-clean.png" alt="VENSAIRA AI Logo" />
         </Link>
 

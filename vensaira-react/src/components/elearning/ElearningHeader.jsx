@@ -9,57 +9,124 @@ export default function ElearningHeader() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user, logout } = useAuth();
-  
-  const isActive = (path) => location.pathname === path;
+
+  const isCoursesActive = location.pathname.startsWith('/elearning/courses');
+  const isProjectsActive = location.pathname.startsWith('/elearning/projects');
+
+  const handleLogout = () => {
+    logout();
+    setMobileOpen(false);
+    navigate('/elearning/courses');
+  };
 
   return (
-    <header className="navbar" id="elearning-navbar" style={{ position: 'sticky', top: 0, background: '#FFFFFF', borderBottom: '1px solid var(--el-border)', zIndex: 1000, padding: '0 24px' }}>
-      <div className="navbar-container" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
-        
-        {/* Logo */}
-        <Link to="/" className="brand-logo" aria-label="VENSAIRA AI Corporate Home" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }} onClick={() => setMobileOpen(false)}>
+    <header className="el-navbar" id="elearning-navbar">
+      <div className="el-navbar-inner">
+
+        {/* Brand Logo */}
+        <Link
+          to="/"
+          className="brand-logo"
+          aria-label="VENSAIRA AI Home"
+          style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}
+          onClick={() => {
+            setMobileOpen(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <img src="/assets/logo-header-clean.png" alt="VENSAIRA AI Logo" style={{ height: '36px' }} />
-          <span style={{ fontWeight: 700, fontSize: '1.2rem', color: 'var(--el-navy)', letterSpacing: '-0.02em', borderLeft: '2px solid var(--el-border)', paddingLeft: '12px' }}>eLearning</span>
+          <span style={{ fontWeight: 700, fontSize: '1.2rem', color: 'var(--el-navy)', letterSpacing: '-0.02em', borderLeft: '2px solid var(--el-border)', paddingLeft: '12px' }}>
+            eLearning
+          </span>
         </Link>
 
-        {/* Center Nav */}
-        <nav aria-label="eLearning navigation">
-          <ul className={`nav-menu${mobileOpen ? ' open' : ''}`} style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', gap: '32px' }}>
-            <li role="none">
-              <Link to="/elearning" className={`nav-link${isActive('/elearning') ? ' active' : ''}`} style={{ color: 'var(--el-navy)', fontWeight: 600, textDecoration: 'none' }} role="menuitem" onClick={() => setMobileOpen(false)}>
-                Home
-              </Link>
-            </li>
-            <li role="none">
-              <Link to="/elearning/courses" className={`nav-link${isActive('/elearning/courses') ? ' active' : ''}`} style={{ color: 'var(--el-navy)', fontWeight: 600, textDecoration: 'none' }} role="menuitem" onClick={() => setMobileOpen(false)}>
-                Courses
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        {/* Navigation Links & Actions */}
+        <div className={`el-nav-menu-wrapper${mobileOpen ? ' open' : ''}`}>
+          <nav aria-label="eLearning navigation">
+            <ul className="el-nav-links" role="menubar">
+              <li role="none">
+                <Link
+                  to="/elearning/courses"
+                  className={`el-nav-item${isCoursesActive ? ' active' : ''}`}
+                  role="menuitem"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Courses
+                </Link>
+              </li>
+              <li role="none">
+                <Link
+                  to="/elearning/projects"
+                  className={`el-nav-item${isProjectsActive ? ' active' : ''}`}
+                  role="menuitem"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Projects
+                </Link>
+              </li>
+            </ul>
+          </nav>
 
-        {/* Right Nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          {user ? (
-            <>
-              <Link to="/elearning/dashboard" className="el-btn el-btn-secondary" style={{ padding: '8px 20px', fontSize: '14px' }}>
-                Dashboard
-              </Link>
-              <button onClick={() => { logout(); navigate('/elearning'); }} className="el-btn" style={{ padding: '8px 20px', fontSize: '14px' }}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/elearning/login" className="el-btn el-btn-secondary" style={{ padding: '8px 20px', fontSize: '14px' }}>
-                Login
-              </Link>
-              <Link to="/elearning/signup" className="el-btn" style={{ padding: '8px 20px', fontSize: '14px' }}>
-                Sign Up
-              </Link>
-            </>
-          )}
+          {/* User Auth Actions */}
+          <div className="el-nav-actions">
+            {user ? (
+              <>
+                <Link
+                  to="/elearning/dashboard"
+                  className="el-btn el-btn-secondary"
+                  style={{ padding: '8px 20px', fontSize: '14px' }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="el-btn"
+                  style={{ padding: '8px 20px', fontSize: '14px', border: 'none', cursor: 'pointer' }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/elearning/login"
+                  className="el-btn el-btn-secondary"
+                  style={{ padding: '8px 20px', fontSize: '14px' }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/elearning/signup"
+                  className="el-btn"
+                  style={{ padding: '8px 20px', fontSize: '14px' }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
         </div>
+
+        {/* Mobile Hamburger Toggle */}
+        <button
+          className="el-mobile-toggle"
+          aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          {mobileOpen ? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          ) : (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          )}
+        </button>
 
       </div>
     </header>

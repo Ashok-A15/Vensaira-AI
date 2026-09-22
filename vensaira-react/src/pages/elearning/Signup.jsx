@@ -51,7 +51,7 @@ export default function Signup() {
       <div className="el-auth-card" style={{ maxWidth: '520px' }}>
 
         <div className="el-auth-header">
-          <Link to="/elearning" className="el-auth-brand">
+          <Link to="/elearning/courses" className="el-auth-brand">
             VENSAIRA AI <span>eLearning</span>
           </Link>
           <h1 className="el-auth-title">Create Your Learning Account</h1>
