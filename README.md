@@ -28,7 +28,7 @@
 ## 🌐 Application Architecture & Routes
 
 ### Corporate Website
-- `/` — Main landing page (Hero, AI Solutions, About Us, Industries, Innovation, eLearning showcase, Customers)
+- `/` — Main homepage (Hero, AI Solutions, About Us, Industries, Innovation, eLearning showcase, Customers)
 - `/contact` — Two-column enterprise contact form with area-of-interest selection and Formspree integration
 - `/mission-vision` — Corporate mission, vision, and core values
 

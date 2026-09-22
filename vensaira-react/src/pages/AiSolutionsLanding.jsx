@@ -5,6 +5,7 @@ import '../styles/sections.css';
 
 export default function AiSolutionsLanding() {
   useEffect(() => {
+    document.title = 'AI Solutions | VENSAIRA AI';
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 

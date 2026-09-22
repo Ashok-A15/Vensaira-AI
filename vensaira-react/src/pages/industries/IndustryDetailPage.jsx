@@ -5,6 +5,9 @@ import '../../styles/sections.css';
 export default function IndustryDetailPage({ industry }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+    if (industry?.title) {
+      document.title = `${industry.title} | VENSAIRA AI`;
+    }
   }, [industry]);
 
   if (!industry) return null;

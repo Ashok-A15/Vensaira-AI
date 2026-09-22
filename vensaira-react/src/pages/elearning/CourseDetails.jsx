@@ -16,6 +16,12 @@ export default function CourseDetails() {
   const course = COURSES.find(c => c.slug === courseId || c.id === courseId);
 
   useEffect(() => {
+    if (course?.title) {
+      document.title = `${course.title} | Vensaira AI eLearning`;
+    }
+  }, [course]);
+
+  useEffect(() => {
     if (!sectionRef.current) return;
     const items = sectionRef.current.querySelectorAll('.el-animate');
     const observer = new IntersectionObserver((entries) => {

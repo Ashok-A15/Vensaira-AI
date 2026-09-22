@@ -9,6 +9,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = 'Dashboard | Vensaira AI eLearning';
     if (!user) {
       navigate('/elearning/login');
     }

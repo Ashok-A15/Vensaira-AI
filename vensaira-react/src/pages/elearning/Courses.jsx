@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { COURSES } from '../../data/courses';
 import '../../styles/elearning.css';
 
 export default function Courses() {
+  useEffect(() => {
+    document.title = 'eLearning | VENSAIRA AI';
+  }, []);
+
   return (
     <div style={{ background: '#F5F8FC', minHeight: '100vh', paddingTop: '120px', paddingBottom: '100px' }}>
       <div className="el-container">

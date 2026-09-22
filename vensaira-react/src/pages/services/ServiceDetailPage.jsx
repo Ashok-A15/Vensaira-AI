@@ -5,6 +5,9 @@ import '../../styles/sections.css';
 export default function ServiceDetailPage({ service, children }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+    if (service?.title) {
+      document.title = `${service.title} | VENSAIRA AI`;
+    }
   }, [service]);
 
   if (!service) return null;

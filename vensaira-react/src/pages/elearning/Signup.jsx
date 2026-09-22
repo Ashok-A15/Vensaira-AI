@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/elearning.css';
 
 export default function Signup() {
+  useEffect(() => {
+    document.title = 'Sign Up | Vensaira AI eLearning';
+  }, []);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
