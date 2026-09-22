@@ -16,6 +16,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const location = useLocation();
 
   // Scroll handler
@@ -29,7 +30,7 @@ export default function Header() {
   useEffect(() => {
     setMobileOpen(false);
     setDropdownOpen(false);
-  }, [location]);
+  }, [location.pathname, location.hash]);
 
   // Close dropdown on outside click
   const handleDocClick = useCallback((e) => {
@@ -41,7 +42,86 @@ export default function Header() {
     return () => document.removeEventListener('click', handleDocClick);
   }, [handleDocClick]);
 
-  const isActive = (path) => location.pathname === path;
+  // Hash change listener
+  useEffect(() => {
+    const handleHashChange = () => {
+      const h = window.location.hash.replace('#', '');
+      if (h) {
+        setActiveSection(h);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Active section tracking on corporate home page ('/')
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+
+    const sectionIds = ['home', 'ai-solutions', 'about', 'industries', 'innovation', 'elearning', 'customers'];
+
+    // Initial check from hash
+    if (location.hash) {
+      const hashId = location.hash.replace('#', '');
+      if (sectionIds.includes(hashId)) {
+        setActiveSection(hashId);
+      }
+    } else if (window.scrollY < 150) {
+      setActiveSection('home');
+    }
+
+    const onScrollSpy = () => {
+      if (window.scrollY < 150) {
+        setActiveSection('home');
+        return;
+      }
+
+      const scrollPos = window.scrollY + 220;
+      let current = '';
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const id = sectionIds[i];
+        const el = document.getElementById(id);
+        if (el && scrollPos >= el.offsetTop) {
+          current = id;
+          break;
+        }
+      }
+
+      if (current) {
+        setActiveSection(current);
+      }
+    };
+
+    window.addEventListener('scroll', onScrollSpy, { passive: true });
+    return () => window.removeEventListener('scroll', onScrollSpy);
+  }, [location.pathname, location.hash]);
+
+  // Determine which navigation item is active
+  const isItemActive = (key) => {
+    if (location.pathname === '/contact') {
+      return key === 'contact';
+    }
+    if (location.pathname.startsWith('/elearning')) {
+      return key === 'elearning';
+    }
+    if (location.pathname.startsWith('/ai-solutions')) {
+      return key === 'ai-solutions';
+    }
+    if (location.pathname.startsWith('/industries')) {
+      return key === 'industries';
+    }
+    if (location.pathname === '/mission-vision') {
+      return key === 'about';
+    }
+
+    // Home page with section hashes / scroll positions
+    if (location.pathname === '/') {
+      return activeSection === key;
+    }
+
+    return false;
+  };
 
   // Smooth scroll helper for same-page anchors
   const handleAnchorClick = (e, href) => {
@@ -49,9 +129,21 @@ export default function Header() {
       e.preventDefault();
       const id = href.slice(2);
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      window.history.pushState(null, '', href);
+      setActiveSection(id);
     }
     setMobileOpen(false);
     setDropdownOpen(false);
+  };
+
+  // Home link handler
+  const handleHomeClick = () => {
+    setMobileOpen(false);
+    if (location.pathname === '/') {
+      window.history.pushState(null, '', '/');
+      setActiveSection('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -64,7 +156,11 @@ export default function Header() {
           aria-label="Vensaira AI Innovations Home"
           onClick={() => {
             setMobileOpen(false);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (location.pathname === '/') {
+              window.history.pushState(null, '', '/');
+              setActiveSection('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
           }}
         >
           <img src="/assets/logo-header-clean.png" alt="VENSAIRA AI Logo" />
@@ -75,15 +171,23 @@ export default function Header() {
           <ul className={`nav-menu${mobileOpen ? ' open' : ''}`} role="menubar">
 
             <li role="none">
-              <Link to="/" className={`nav-link${isActive('/') ? ' active' : ''}`} role="menuitem"
-                onClick={() => { setMobileOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+              <Link
+                to="/"
+                className={`nav-link${isItemActive('home') ? ' active' : ''}`}
+                role="menuitem"
+                onClick={handleHomeClick}
+              >
                 Home
               </Link>
             </li>
 
             <li role="none">
-              <a href="/#about" className="nav-link" role="menuitem"
-                onClick={(e) => handleAnchorClick(e, '/#about')}>
+              <a
+                href="/#about"
+                className={`nav-link${isItemActive('about') ? ' active' : ''}`}
+                role="menuitem"
+                onClick={(e) => handleAnchorClick(e, '/#about')}
+              >
                 About Us
               </a>
             </li>
@@ -91,7 +195,7 @@ export default function Header() {
             {/* AI Solutions Dropdown */}
             <li className={`nav-dropdown${dropdownOpen ? ' open' : ''}`} role="none">
               <button
-                className="nav-link dropdown-toggle"
+                className={`nav-link dropdown-toggle${isItemActive('ai-solutions') ? ' active' : ''}`}
                 aria-expanded={dropdownOpen}
                 aria-haspopup="true"
                 role="menuitem"
@@ -101,19 +205,40 @@ export default function Header() {
                   if (e.key === 'Escape') setDropdownOpen(false);
                 }}
               >
-                AI Solutions
+                <span>AI Solutions</span>
+                <svg
+                  className={`dropdown-chevron${dropdownOpen ? ' open' : ''}`}
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M1 1L5 5L9 1"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </button>
               <ul className="dropdown-menu" role="menu">
                 {AI_SOLUTIONS_ITEMS.map((item) => (
                   <li key={item.label} role="none">
-                    <Link to={item.href} role="menuitem"
+                    <Link
+                      to={item.href}
+                      role="menuitem"
                       onClick={(e) => {
                         if (item.href.startsWith('/#')) {
                           handleAnchorClick(e, item.href);
                         } else {
                           setMobileOpen(false);
+                          setDropdownOpen(false);
                         }
-                      }}>
+                      }}
+                    >
                       {item.label}
                     </Link>
                   </li>
@@ -122,29 +247,45 @@ export default function Header() {
             </li>
 
             <li role="none">
-              <a href="/#industries" className="nav-link" role="menuitem"
-                onClick={(e) => handleAnchorClick(e, '/#industries')}>
+              <a
+                href="/#industries"
+                className={`nav-link${isItemActive('industries') ? ' active' : ''}`}
+                role="menuitem"
+                onClick={(e) => handleAnchorClick(e, '/#industries')}
+              >
                 Industries
               </a>
             </li>
 
             <li role="none">
-              <a href="/#innovation" className="nav-link" role="menuitem"
-                onClick={(e) => handleAnchorClick(e, '/#innovation')}>
+              <a
+                href="/#innovation"
+                className={`nav-link${isItemActive('innovation') ? ' active' : ''}`}
+                role="menuitem"
+                onClick={(e) => handleAnchorClick(e, '/#innovation')}
+              >
                 Innovation
               </a>
             </li>
 
             <li role="none">
-              <Link to="/elearning" className={`nav-link${isActive('/elearning') ? ' active' : ''}`} role="menuitem"
-                onClick={() => setMobileOpen(false)}>
+              <Link
+                to="/elearning"
+                className={`nav-link${isItemActive('elearning') ? ' active' : ''}`}
+                role="menuitem"
+                onClick={() => setMobileOpen(false)}
+              >
                 eLearning
               </Link>
             </li>
 
             <li role="none">
-              <a href="/#customers" className="nav-link" role="menuitem"
-                onClick={(e) => handleAnchorClick(e, '/#customers')}>
+              <a
+                href="/#customers"
+                className={`nav-link${isItemActive('customers') ? ' active' : ''}`}
+                role="menuitem"
+                onClick={(e) => handleAnchorClick(e, '/#customers')}
+              >
                 Customers
               </a>
             </li>
@@ -152,7 +293,7 @@ export default function Header() {
             <li role="none">
               <Link
                 to="/contact"
-                className={`nav-link nav-btn-cta${isActive('/contact') ? ' active' : ''}`}
+                className={`nav-link nav-btn-cta${isItemActive('contact') ? ' active' : ''}`}
                 role="menuitem"
                 onClick={() => setMobileOpen(false)}
               >
