@@ -39,7 +39,7 @@ export default function ServiceDetailPage({ service, children }) {
           <div style={{ marginBottom: 60 }}>
             <h2 style={{ fontSize: '32px', color: '#0F172A', marginBottom: 24 }}>Overview</h2>
             <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.7 }}>
-              Vensaira AI Innovations brings industry-leading expertise in {service.title.toLowerCase()}. 
+              Vensaira AI brings industry-leading expertise in {service.title.toLowerCase()}. 
               We partner with organizations to build secure, resilient, and scalable systems that drive long-term business value.
             </p>
           </div>

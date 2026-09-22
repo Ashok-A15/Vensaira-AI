@@ -21,6 +21,9 @@ export default function Footer() {
             <Link to="/" className="footer-logo" aria-label="VENSAIRA AI Home">
               <img src="/assets/logo-footer-clean.png" alt="VENSAIRA AI Logo" />
             </Link>
+            <p className="footer-tagline">
+              Your Vision, Powered by AI
+            </p>
             <p className="footer-mission">
               Building practical technology solutions with AI, software, cloud and data.
             </p>
@@ -91,7 +94,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <div className="footer-copyright">
-            &copy; {currentYear} Vensaira AI Innovations. All rights reserved.
+            &copy; {currentYear} Vensaira AI. All rights reserved.
           </div>
           <div className="footer-legal">
             <Link to="#">Privacy Policy</Link>

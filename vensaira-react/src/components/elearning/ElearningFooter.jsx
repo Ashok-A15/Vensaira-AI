@@ -65,7 +65,7 @@ export default function ElearningFooter() {
 
       <div className="el-footer-container">
         <div className="el-footer-bottom">
-          <span>&copy; {currentYear} Vensaira AI Innovations. All rights reserved.</span>
+          <span>&copy; {currentYear} Vensaira AI. All rights reserved.</span>
           <Link to="/" style={{ color: '#64748B', textDecoration: 'none', fontSize: '13px' }}>
             Back to main site &rarr;
           </Link>

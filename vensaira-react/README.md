@@ -1,4 +1,4 @@
-# VENSAIRA AI Innovations — React Application
+# VENSAIRA AI — React Application
 
 Enterprise AI Solutions, Software Engineering, Industry Transformation, and AI-Powered eLearning Platform.
 

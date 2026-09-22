@@ -150,96 +150,82 @@
 
 .contact-interests {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 16px;
 }
 
 @media (max-width: 600px) {
   .contact-interests {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
-/* CHECKBOX STYLING */
-.interest-label {
+/* Professional Selectable Box / Button */
+.interest-option {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  min-height: 52px;
+  padding: 12px 18px;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 8px;
+  color: #0F172A;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
   cursor: pointer;
-  position: relative;
-  padding: 8px 0;
-  transition: opacity 0.2s ease;
+  user-select: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
-.interest-label:hover {
-  opacity: 0.85;
+.interest-option span {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
-/* Properly hide the native checkbox completely to prevent vertical line artifacts */
-.interest-label input {
+.interest-option:hover:not(.selected):not(:has(input:checked)) {
+  border-color: var(--electric-blue);
+  background: #F8FAFC;
+}
+
+/* Keyboard accessibility outline */
+.interest-option:focus-within,
+.interest-option:has(input:focus-visible) {
+  outline: 2px solid var(--electric-blue);
+  outline-offset: 2px;
+}
+
+/* Hide native checkbox input without layout artifacts */
+.interest-option input[type="checkbox"] {
   position: absolute;
-  opacity: 0;
   width: 1px;
   height: 1px;
-  margin: -1px;
   padding: 0;
+  margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-  appearance: none;
-  outline: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.interest-box {
-  width: 22px;
-  height: 22px;
-  border: 2px solid #CBD5E1;
-  border-radius: 4px;
-  background: #FFF;
-  position: relative;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-
-.interest-label input:checked ~ .interest-box {
+/* SELECTED STATE: Entire box becomes Vensaira primary blue, border blue, text white */
+.interest-option.selected,
+.interest-option:has(input:checked) {
   background: var(--electric-blue);
   border-color: var(--electric-blue);
+  color: #FFFFFF;
 }
 
-.interest-box:after {
-  content: "";
-  position: absolute;
-  display: none;
-  left: 7px;
-  top: 3px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-.interest-label input:checked ~ .interest-box:after {
-  display: block;
-}
-
-/* Custom focus indicator around the custom box, NOT a vertical line */
-.interest-label input:focus-visible ~ .interest-box {
-  outline: 2px solid var(--electric-blue);
-  outline-offset: 2px;
-  border-color: var(--electric-blue);
-}
-
-.interest-text {
-  font-size: 15px;
-  color: #0F172A;
-  line-height: 1.4;
-  font-weight: 500;
-}
-
-.interest-label input:checked ~ .interest-text {
-  font-weight: 600;
+.interest-option.selected span,
+.interest-option:has(input:checked) span {
+  color: #FFFFFF;
 }
 
 

@@ -1,13 +1,13 @@
-# VENSAIRA AI Innovations
+# VENSAIRA AI
 
-> **Building Intelligent Solutions for a Smarter Future**  
+> **Your Vision, Powered by AI**  
 > Enterprise AI Solutions, Software Engineering, Industry Transformation, and AI-Powered eLearning Platform.
 
 ---
 
 ## 🚀 Overview
 
-**VENSAIRA AI Innovations** is a modern, high-performance web platform built with **React 19**, **Vite**, and **React Router 7**. The platform delivers a dual experience:
+**VENSAIRA AI** is a modern, high-performance web platform built with **React 19**, **Vite**, and **React Router 7**. The platform delivers a dual experience:
 1. **Corporate Enterprise Portal:** Showcasing end-to-end AI capabilities, industry-specific solutions, technology services, company mission, and corporate contact inquiries.
 2. **Integrated eLearning Platform:** A dedicated learning management experience offering curriculum tracks in AI/ML, Generative AI, Cloud Computing, Full Stack Development, Data Analytics, and Agentic AI.
 
@@ -187,4 +187,4 @@ VENSAIRA AI/
 
 ## 📄 License
 
-&copy; 2026 **VENSAIRA AI Innovations**. All rights reserved.
+&copy; 2026 **VENSAIRA AI**. All rights reserved.

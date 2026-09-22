@@ -9,7 +9,7 @@ import Customers from '../components/Customers';
 
 export default function Home() {
   useEffect(() => {
-    document.title = 'Vensaira AI Innovations | Building Intelligent Solutions for a Smarter Future';
+    document.title = 'Vensaira AI | Building Intelligent Solutions for a Smarter Future';
   }, []);
 
   return (

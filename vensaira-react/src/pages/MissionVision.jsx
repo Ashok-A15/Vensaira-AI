@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import '../styles/cards.css';
 
-// Vensaira AI Innovations Mission & Vision — from index.html About section
+// Vensaira AI Mission & Vision — from index.html About section
 export default function MissionVision() {
   useEffect(() => {
-    document.title = 'Mission & Vision | Vensaira AI Innovations';
+    document.title = 'Mission & Vision | Vensaira AI';
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 

@@ -17,7 +17,7 @@ export default function Contact() {
   const [interests, setInterests] = useState([]);
 
   useEffect(() => {
-    document.title = 'Contact Us | Vensaira AI Innovations';
+    document.title = 'Contact Us | Vensaira AI';
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
@@ -70,7 +70,7 @@ export default function Contact() {
             <span className="contact-eyebrow">CONTACT US</span>
             <h1 className="contact-title">Let's Build the Future with AI</h1>
             <p className="contact-desc">
-              Whether you're exploring your first AI initiative or looking to scale an existing AI ecosystem, Vensaira AI Innovations can help transform your ideas into intelligent, production-ready solutions.
+              Whether you're exploring your first AI initiative or looking to scale an existing AI ecosystem, Vensaira AI can help transform your ideas into intelligent, production-ready solutions.
             </p>
             <p className="contact-desc highlight">
               Have an AI Idea? Let's turn it into reality.
@@ -120,17 +120,22 @@ export default function Contact() {
                 <div className="contact-group">
                   <label style={{ marginBottom: '16px', display: 'block' }}>We are interested in</label>
                   <div className="contact-interests">
-                    {AI_INTERESTS.map((interest) => (
-                      <label key={interest} className="interest-label">
-                        <input
-                          type="checkbox"
-                          checked={interests.includes(interest)}
-                          onChange={() => toggleInterest(interest)}
-                        />
-                        <span className="interest-box" aria-hidden="true" />
-                        <span className="interest-text">{interest}</span>
-                      </label>
-                    ))}
+                    {AI_INTERESTS.map((interest) => {
+                      const isSelected = interests.includes(interest);
+                      return (
+                        <label
+                          key={interest}
+                          className={`interest-option${isSelected ? ' selected' : ''}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleInterest(interest)}
+                          />
+                          <span>{interest}</span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -149,7 +154,7 @@ export default function Contact() {
                 {success && (
                   <div className="contact-alert success" role="alert">
                     <div aria-hidden="true">✓</div>
-                    <p>Thank you for contacting Vensaira AI Innovations. Your message has been received. We'll get back to you shortly.</p>
+                    <p>Thank you for contacting Vensaira AI. Your message has been received. We'll get back to you shortly.</p>
                   </div>
                 )}
 

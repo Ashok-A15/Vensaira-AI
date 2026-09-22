@@ -41,7 +41,7 @@
 
 .footer-logo {
   display: inline-block;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .footer-logo img {
@@ -50,8 +50,17 @@
   display: block;
 }
 
-.footer-mission {
+.footer-tagline {
   font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 14px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.footer-mission {
+  font-size: 14px;
   line-height: 1.6;
   color: #A8B5C7;
   max-width: 320px;

@@ -26,7 +26,7 @@ export default function ContactCTA() {
             <h2 className="cta-banner-title" id="cta-title">Let&apos;s Build the Future with AI</h2>
             <p className="cta-banner-desc">
               Whether you are exploring your first AI initiative or looking to scale an existing AI ecosystem,
-              Vensaira AI Innovations can help transform your ideas into intelligent, production-ready solutions.
+              Vensaira AI can help transform your ideas into intelligent, production-ready solutions.
             </p>
             <Link to="/contact" className="btn btn-primary" style={{ margin: '0 auto' }}>
               <span>Contact Us</span>

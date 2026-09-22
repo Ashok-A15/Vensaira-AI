@@ -64,7 +64,7 @@ export default function About() {
             </h2>
             
             <p className="corporate-desc about-animate" style={{ marginBottom: '16px', textAlign: 'left', margin: '0 0 16px 0', fontSize: '1.1rem', color: '#334155' }}>
-              Vensaira AI Innovations is a technology company focused on helping organizations use modern software, cloud, data and artificial intelligence to solve business challenges and create scalable digital solutions.
+              Vensaira AI is a technology company focused on helping organizations use modern software, cloud, data and artificial intelligence to solve business challenges and create scalable digital solutions.
             </p>
             
             <p className="corporate-desc about-animate" style={{ textAlign: 'left', margin: '0 0 32px 0', fontSize: '1.05rem' }}>
