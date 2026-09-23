@@ -149,11 +149,10 @@ export default function Header() {
   return (
     <header className={`navbar${scrolled ? ' scrolled' : ''}`} id="navbar">
       <div className="navbar-container">
-        {/* Logo */}
         <Link
           to="/"
           className="brand-logo"
-          aria-label="Vensaira AI Innovations Home"
+          aria-label="VENSAIRA AI Home"
           onClick={() => {
             setMobileOpen(false);
             if (location.pathname === '/') {
@@ -163,7 +162,11 @@ export default function Header() {
             }
           }}
         >
-          <img src="/assets/logo-header-clean.png" alt="VENSAIRA AI Logo" />
+          <img src="/assets/va-symbol-dark.png" alt="VENSAIRA AI Symbol" className="brand-symbol" />
+          <div className="brand-text">
+            <span className="brand-name">VENSAIRA AI</span>
+            <span className="brand-tagline">YOUR VISION, POWERED BY AI</span>
+          </div>
         </Link>
 
         {/* Desktop Nav */}

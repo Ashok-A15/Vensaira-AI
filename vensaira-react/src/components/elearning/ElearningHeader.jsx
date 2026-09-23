@@ -28,14 +28,17 @@ export default function ElearningHeader() {
           to="/"
           className="brand-logo"
           aria-label="VENSAIRA AI Home"
-          style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}
           onClick={() => {
             setMobileOpen(false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         >
-          <img src="/assets/logo-header-clean.png" alt="VENSAIRA AI Logo" style={{ height: '36px' }} />
-          <span style={{ fontWeight: 700, fontSize: '1.2rem', color: 'var(--el-navy)', letterSpacing: '-0.02em', borderLeft: '2px solid var(--el-border)', paddingLeft: '12px' }}>
+          <img src="/assets/va-symbol-dark.png" alt="VENSAIRA AI Symbol" className="brand-symbol" />
+          <div className="brand-text">
+            <span className="brand-name">VENSAIRA AI</span>
+            <span className="brand-tagline">YOUR VISION, POWERED BY AI</span>
+          </div>
+          <span className="el-brand-badge">
             eLearning
           </span>
         </Link>

@@ -5,8 +5,11 @@
 .el-footer {
   background-color: #0B1F3A;
   color: #CBD5E1;
-  padding: 72px 0 0;
   font-family: inherit;
+}
+
+.el-footer-main {
+  padding: 72px 0 60px;
 }
 
 .el-footer-container {
@@ -20,7 +23,6 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 48px;
-  padding-bottom: 60px;
 }
 
 @media (max-width: 1024px) {
@@ -100,20 +102,30 @@
   color: #3B82F6;
 }
 
-/* ── Divider ── */
-.el-footer-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.08);
+/* ── Separator & Bottom Bar ── */
+.el-footer-bottom-bar {
+  background-color: #05101E;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px 0;
 }
 
-/* ── Bottom Bar ── */
 .el-footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 0;
   font-size: 13px;
   color: #64748B;
+}
+
+.el-footer-back-link {
+  color: #64748B;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+
+.el-footer-back-link:hover {
+  color: #3B82F6;
 }
 
 @media (max-width: 600px) {

@@ -29,14 +29,61 @@
 .brand-logo {
   display: flex;
   align-items: center;
+  gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
 }
 
-.brand-logo img {
-  height: 40px;
+.brand-symbol {
+  height: 38px;
   width: auto;
   object-fit: contain;
+  display: block;
+}
+
+.brand-logo img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand-name {
+  font-family: 'Space Grotesk', var(--font-heading);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #102A4A;
+  line-height: 1.1;
+  display: block;
+}
+
+.brand-tagline {
+  font-family: var(--font-main);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #1E3A5F;
+  text-transform: uppercase;
+  margin-top: 2.5px;
+  line-height: 1;
+  display: block;
+  white-space: nowrap;
+}
+
+.el-brand-badge {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--el-navy, #0B1F3A);
+  letter-spacing: -0.02em;
+  border-left: 2px solid var(--el-border, #E2E8F0);
+  padding-left: 12px;
+  margin-left: 4px;
 }
 
 /* ── Nav Menu ── */
@@ -270,5 +317,39 @@
     margin: 24px var(--container-padding) 0;
     width: calc(100% - (var(--container-padding) * 2));
     justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-logo {
+    gap: 8px;
+  }
+  .brand-symbol,
+  .brand-logo img {
+    height: 32px;
+  }
+  .brand-name {
+    font-size: 16px;
+  }
+  .brand-tagline {
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+  .el-brand-badge {
+    font-size: 0.95rem;
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .brand-symbol,
+  .brand-logo img {
+    height: 28px;
+  }
+  .brand-name {
+    font-size: 14.5px;
+  }
+  .brand-tagline {
+    font-size: 7.5px;
   }
 }
