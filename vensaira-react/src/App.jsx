@@ -42,6 +42,7 @@ import Account from './pages/elearning/Account';
 import ElearningContact from './pages/elearning/ElearningContact';
 import ElearningHeader from './components/elearning/ElearningHeader';
 import ElearningFooter from './components/elearning/ElearningFooter';
+import Chatbot from './components/chatbot/Chatbot';
 import './styles/global.css';
 
 // Scroll to top on route change
@@ -160,6 +161,7 @@ function AppInner() {
       </Routes>
 
       {pathname.startsWith('/elearning') ? <ElearningFooter /> : <Footer />}
+      <Chatbot />
     </>
   );
 }
