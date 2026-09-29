@@ -1,0 +1,571 @@
+/**
+ * Vensaira AI Assistant — Candidate Application Styles
+ */
+
+/* ── Careers Intro View ── */
+.vensaira-careers-intro {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #FFFFFF;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.vensaira-careers-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background-color: #F0F7FD;
+  color: #0878C9;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.vensaira-careers-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #102B48;
+  margin: 0 0 10px;
+  letter-spacing: -0.3px;
+}
+
+.vensaira-careers-description {
+  font-size: 13.5px;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 0 0 24px;
+  max-width: 380px;
+}
+
+.vensaira-careers-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.vensaira-careers-lookup-form {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.vensaira-lookup-group {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+.vensaira-lookup-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  font-size: 13px;
+  outline: none;
+}
+
+.vensaira-lookup-input:focus {
+  border-color: #0878C9;
+}
+
+.vensaira-lookup-submit-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: #0878C9;
+  color: #FFFFFF;
+  border: none;
+  font-weight: 600;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.vensaira-lookup-error {
+  font-size: 11.5px;
+  color: #DC2626;
+  margin-top: 4px;
+  text-align: left;
+}
+
+/* ── Application Flow ── */
+.vensaira-app-flow {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.vensaira-flow-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #EDF2F7;
+}
+
+.vensaira-flow-back-btn,
+.vensaira-flow-cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vensaira-flow-back-btn:hover,
+.vensaira-flow-cancel-btn:hover {
+  color: #0878C9;
+}
+
+.vensaira-flow-step-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #102B48;
+}
+
+.vensaira-flow-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px;
+  background-color: #F8FAFC;
+}
+
+.vensaira-step-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E2E8F0;
+}
+
+.vensaira-step-prompt {
+  font-size: 15px;
+  font-weight: 700;
+  color: #102B48;
+  margin-bottom: 12px;
+}
+
+.vensaira-step-subprompt {
+  font-size: 12.5px;
+  color: #64748B;
+  margin-top: -6px;
+  margin-bottom: 14px;
+}
+
+.vensaira-step-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vensaira-step-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  font-size: 13.5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.vensaira-step-input:focus {
+  border-color: #0878C9;
+  box-shadow: 0 0 0 3px rgba(8, 120, 201, 0.15);
+}
+
+.vensaira-step-error {
+  font-size: 12px;
+  color: #DC2626;
+  font-weight: 500;
+}
+
+.vensaira-step-submit-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background-color: #0878C9;
+  color: #FFFFFF;
+  border: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.vensaira-step-submit-btn:hover:not(:disabled) {
+  background-color: #065e9e;
+}
+
+.vensaira-step-submit-btn:disabled {
+  background-color: #CBD5E1;
+  cursor: not-allowed;
+}
+
+/* Options Grid & Pills */
+.vensaira-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vensaira-options-grid.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.vensaira-option-pill {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+  color: #102B48;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.vensaira-option-pill:hover {
+  border-color: #0878C9;
+  background-color: #F0F7FD;
+}
+
+.vensaira-option-pill.selected {
+  border-color: #0878C9;
+  background-color: #0878C9;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* Skills Multiselect & Custom Other Input */
+.vensaira-multiselect-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.vensaira-skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 20px;
+  border: 1px solid #CBD5E1;
+  background-color: #FFFFFF;
+  color: #102B48;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vensaira-skill-pill:hover {
+  border-color: #0878C9;
+  background-color: #F0F7FD;
+}
+
+.vensaira-skill-pill.selected {
+  border-color: #0878C9;
+  background-color: #0878C9;
+  color: #FFFFFF;
+}
+
+.vensaira-pill-check {
+  font-weight: 700;
+}
+
+.vensaira-other-skill-wrap {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.vensaira-other-skill-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #102B48;
+}
+
+/* File Upload Dropzone */
+.vensaira-file-upload-container {
+  width: 100%;
+}
+
+.vensaira-upload-dropzone {
+  border: 2px dashed #0878C9;
+  border-radius: 10px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #F0F7FD;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.vensaira-upload-dropzone:hover {
+  background-color: #E3EFF9;
+}
+
+.vensaira-upload-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #102B48;
+  margin-top: 8px;
+}
+
+.vensaira-upload-hint {
+  font-size: 11.5px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.vensaira-file-preview-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background-color: #F0F7FD;
+  border: 1px solid #BAE0FD;
+}
+
+.vensaira-file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.vensaira-file-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.vensaira-file-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #102B48;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vensaira-file-size {
+  font-size: 11px;
+  color: #64748B;
+}
+
+.vensaira-btn-remove-file {
+  background: transparent;
+  border: none;
+  color: #DC2626;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* ── Candidate Review Card ── */
+.vensaira-review-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 18px 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.vensaira-review-header {
+  margin-bottom: 16px;
+}
+
+.vensaira-review-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #102B48;
+  margin: 0 0 4px;
+}
+
+.vensaira-review-subtitle {
+  font-size: 12px;
+  color: #64748B;
+  margin: 0;
+}
+
+.vensaira-review-section {
+  margin-bottom: 14px;
+}
+
+.vensaira-review-section-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #0878C9;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.vensaira-review-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #EDF2F7;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vensaira-review-row {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px;
+  border-bottom: 1px solid #EDF2F7;
+}
+
+.vensaira-review-row:last-child {
+  border-bottom: none;
+}
+
+.vensaira-review-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vensaira-review-label {
+  font-size: 11px;
+  color: #64748B;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.vensaira-btn-edit {
+  background: transparent;
+  border: none;
+  color: #0878C9;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.vensaira-btn-edit:hover {
+  text-decoration: underline;
+}
+
+.vensaira-review-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #102B48;
+  margin-top: 2px;
+}
+
+.vensaira-review-actions {
+  margin-top: 16px;
+}
+
+/* ── Application Success ── */
+.vensaira-success-screen {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #FFFFFF;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.vensaira-success-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #DCFCE7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.vensaira-success-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #102B48;
+  margin: 0 0 12px;
+}
+
+.vensaira-app-id-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background-color: #F0F7FD;
+  border: 1px solid #BAE0FD;
+  margin-bottom: 14px;
+}
+
+.vensaira-badge-label {
+  font-size: 12px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.vensaira-badge-val {
+  font-size: 13px;
+  color: #0878C9;
+  font-weight: 800;
+  font-family: monospace;
+}
+
+.vensaira-success-message {
+  font-size: 13px;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 0 0 16px;
+  max-width: 360px;
+}
+
+.vensaira-success-meta {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #F8FAFC;
+  border: 1px solid #EDF2F7;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 12.5px;
+}
+
+.vensaira-meta-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.vensaira-success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}

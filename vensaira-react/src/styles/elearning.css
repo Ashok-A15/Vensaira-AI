@@ -453,14 +453,68 @@
   padding: 8px;
 }
 
+/* ── eLearning Subbar / Back to Main Website Button ── */
+.el-navbar-subbar {
+  border-top: 1px solid #EEF2F6;
+  padding: 8px 0;
+  background: #FFFFFF;
+}
+
+.el-navbar-subbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.el-back-to-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: #F8FAFC;
+  border: 1px solid var(--el-border, #E2E8F0);
+  border-radius: 6px;
+  color: #1E3A5F;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+}
+
+.el-back-to-main:hover {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #1769D1;
+}
+
+.el-back-arrow {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.el-back-to-main:hover .el-back-arrow {
+  transform: translateX(-3px);
+}
+
 @media (max-width: 820px) {
   .el-mobile-toggle {
     display: flex;
   }
 
+  .el-navbar-subbar {
+    padding: 6px 0;
+  }
+
+  .el-back-to-main {
+    padding: 5px 12px;
+    font-size: 12.5px;
+  }
+
   .el-nav-menu-wrapper {
     position: fixed;
-    top: 72px;
+    top: 116px;
     left: 0;
     right: 0;
     background: #FFFFFF;

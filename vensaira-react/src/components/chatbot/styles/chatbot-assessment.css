@@ -1,0 +1,592 @@
+/**
+ * Vensaira AI Assistant — Assessment & Voice Interview Styles
+ */
+
+/* ── Candidate Dashboard ── */
+.vensaira-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.vensaira-dash-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #EDF2F7;
+  background-color: #FFFFFF;
+}
+
+.vensaira-dash-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vensaira-dash-back-btn:hover {
+  color: #0878C9;
+}
+
+.vensaira-dash-header-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #102B48;
+  margin: 0;
+}
+
+.vensaira-dash-nav {
+  display: flex;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 0 10px;
+  overflow-x: auto;
+}
+
+.vensaira-dash-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.vensaira-dash-tab.active {
+  color: #0878C9;
+  border-bottom-color: #0878C9;
+}
+
+.vensaira-dash-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background-color: #F8FAFC;
+}
+
+/* Cards & Stages */
+.vensaira-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #E2E8F0;
+  margin-bottom: 14px;
+}
+
+.vensaira-card-eyebrow {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #0878C9;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.vensaira-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #102B48;
+  margin: 0 0 6px;
+}
+
+.vensaira-card-desc {
+  font-size: 12.5px;
+  color: #64748B;
+  line-height: 1.45;
+  margin: 0 0 12px;
+}
+
+.vensaira-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.vensaira-grid-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.vensaira-cell-label {
+  font-size: 11px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.vensaira-cell-val {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #102B48;
+  margin-top: 2px;
+}
+
+.vensaira-cell-val.code {
+  font-family: monospace;
+  color: #0878C9;
+}
+
+.vensaira-status-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.vensaira-status-badge.completed {
+  background-color: #DCFCE7;
+  color: #15803D;
+}
+
+.vensaira-status-badge.in-progress {
+  background-color: #FEF3C7;
+  color: #B45309;
+}
+
+.vensaira-status-badge.not-started {
+  background-color: #F1F5F9;
+  color: #64748B;
+}
+
+.vensaira-meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.vensaira-meta-pill {
+  font-size: 11px;
+  background-color: #F1F5F9;
+  color: #475569;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.vensaira-stage-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #EDF2F7;
+  padding-top: 10px;
+  font-size: 12px;
+  color: #64748B;
+}
+
+/* ── Technical Assessment Screen ── */
+.vensaira-assessment-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.vensaira-assessment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #EDF2F7;
+}
+
+.vensaira-assessment-timer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0878C9;
+  background-color: #F0F7FD;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.vensaira-q-tracker {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.vensaira-progress-track {
+  width: 100%;
+  height: 4px;
+  background-color: #E2E8F0;
+}
+
+.vensaira-progress-fill {
+  height: 100%;
+  background-color: #0878C9;
+  transition: width 0.3s ease;
+}
+
+.vensaira-assessment-card {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px;
+}
+
+.vensaira-q-category {
+  font-size: 11px;
+  font-weight: 800;
+  color: #0878C9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.vensaira-q-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #102B48;
+  margin: 0 0 16px;
+  line-height: 1.45;
+}
+
+.vensaira-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vensaira-q-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.vensaira-q-option:hover {
+  border-color: #0878C9;
+  background-color: #F0F7FD;
+}
+
+.vensaira-q-option.selected {
+  border-color: #0878C9;
+  background-color: #0878C9;
+  color: #FFFFFF;
+}
+
+.vensaira-opt-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.vensaira-opt-text {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.vensaira-assessment-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #FFFFFF;
+  border-top: 1px solid #EDF2F7;
+}
+
+/* ── Voice Interview Screen ── */
+.vensaira-interview-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.vensaira-interview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #EDF2F7;
+}
+
+.vensaira-interview-title-badge {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #102B48;
+}
+
+.vensaira-interview-q-count {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.vensaira-interview-intro {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 18px;
+}
+
+.vensaira-interviewer-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background-color: #F0F7FD;
+  border-radius: 10px;
+  border: 1px solid #BAE0FD;
+  margin-bottom: 14px;
+}
+
+.vensaira-interviewer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0878C9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vensaira-interviewer-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #102B48;
+  margin: 0;
+}
+
+.vensaira-interviewer-role {
+  font-size: 11.5px;
+  color: #64748B;
+}
+
+.vensaira-ai-disclaimer {
+  font-size: 12px;
+  color: #64748B;
+  background-color: #F8FAFC;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #EDF2F7;
+  margin-bottom: 14px;
+  line-height: 1.45;
+}
+
+.vensaira-interview-instructions {
+  margin-bottom: 16px;
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.vensaira-instructions-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #102B48;
+  margin: 0 0 8px;
+}
+
+.vensaira-mic-status-box {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background-color: #F0F7FD;
+  border: 1px solid #BAE0FD;
+  margin-bottom: 16px;
+}
+
+.vensaira-mic-status-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0878C9;
+  margin-bottom: 4px;
+}
+
+.vensaira-mic-desc {
+  font-size: 11.5px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Active Voice Interview */
+.vensaira-active-interview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 16px;
+  gap: 12px;
+}
+
+.vensaira-ai-question-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  padding: 14px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.vensaira-question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.vensaira-interviewer-mini {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vensaira-mini-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #0878C9;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vensaira-mini-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.vensaira-audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #CBD5E1;
+  background-color: #FFFFFF;
+  color: #0878C9;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vensaira-audio-btn.speaking {
+  background-color: #F0F7FD;
+  border-color: #0878C9;
+}
+
+.vensaira-question-text {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #102B48;
+  line-height: 1.45;
+}
+
+.vensaira-candidate-response-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  padding: 14px 16px;
+}
+
+.vensaira-response-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vensaira-response-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #102B48;
+}
+
+.vensaira-mic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid #0878C9;
+  background-color: #FFFFFF;
+  color: #0878C9;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vensaira-mic-btn.active {
+  background-color: #DC2626;
+  border-color: #DC2626;
+  color: #FFFFFF;
+}
+
+.vensaira-pulsing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  animation: pulseDot 1s infinite alternate;
+}
+
+@keyframes pulseDot {
+  from { opacity: 0.4; }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.vensaira-response-textarea {
+  width: 100%;
+  border: 1px solid #D8E2EC;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #102B48;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+
+.vensaira-response-textarea:focus {
+  border-color: #0878C9;
+  box-shadow: 0 0 0 2px rgba(8, 120, 201, 0.15);
+}
+
+.vensaira-fallback-hint {
+  font-size: 11px;
+  color: #64748B;
+}
+
+.vensaira-interview-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}

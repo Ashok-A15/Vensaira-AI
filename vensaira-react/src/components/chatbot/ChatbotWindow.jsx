@@ -1,91 +1,69 @@
-import { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+/**
+ * Vensaira AI Assistant — ChatbotWindow Component
+ * Main modal container managing views, navigation, header, chat stream, and sub-views.
+ */
 
-function QuickActionIcon({ type }) {
-  switch (type) {
-    case 'sparkle':
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
-        </svg>
-      );
-    case 'grid':
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <rect x="3" y="3" width="7" height="7" rx="1.5" />
-          <rect x="14" y="3" width="7" height="7" rx="1.5" />
-          <rect x="14" y="14" width="7" height="7" rx="1.5" />
-          <rect x="3" y="14" width="7" height="7" rx="1.5" />
-        </svg>
-      );
-    case 'building':
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z" />
-        </svg>
-      );
-    case 'book':
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-        </svg>
-      );
-    case 'users':
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      );
-    case 'mail':
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="14" rx="2" />
-          <polyline points="3 7 12 13 21 7" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ChatbotHeader from './components/ChatbotHeader';
+import ChatbotMessages from './components/ChatbotMessages';
+import ChatbotInput from './components/ChatbotInput';
+
+import CareersScreen from './careers/CareersScreen';
+import CandidateApplication from './careers/CandidateApplication';
+import ApplicationSuccess from './careers/ApplicationSuccess';
+import AssessmentDashboard from './careers/AssessmentDashboard';
+
+import TechnicalAssessment from './assessment/TechnicalAssessment';
+import VoiceInterview from './assessment/VoiceInterview';
 
 export default function ChatbotWindow({
   isOpen,
   onClose,
+  currentView,
+  setCurrentView,
+  candidate,
+  setCandidate,
+  assessment,
+  setAssessment,
+  interview,
+  setInterview,
+  applicationId,
+  setApplicationId,
   messages,
   inputText,
   setInputText,
   onSendMessage,
   onQuickAction,
-  onSelectInterestOption
+  onSelectInterestOption,
+  onContinueLookup,
+  onClearChat
 }) {
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
-  // Auto-scroll to bottom of messages
+  // Auto-scroll to bottom of messages when in chat view
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && currentView === 'chat') {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       const timer = setTimeout(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 50);
       return () => clearTimeout(timer);
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, currentView]);
 
-  // Focus input when opened
+  // Focus input when opened in chat view
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && currentView === 'chat') {
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [isOpen]);
+  }, [isOpen, currentView]);
 
   // Handle escape key
   useEffect(() => {
@@ -114,222 +92,180 @@ export default function ChatbotWindow({
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputText.trim()) {
-      onSendMessage(inputText);
+  const handleActionClick = (btn) => {
+    if (btn.action === 'careers_intro') {
+      setCurrentView('careers_intro');
+    } else if (btn.route) {
+      handleRouteClick(btn.route);
     }
   };
 
-  // Determine whether conversation is active or initial welcome
+  const handleClearChatClick = () => {
+    const isUnsavedSession =
+      currentView === 'application_flow' ||
+      currentView === 'technical_assessment' ||
+      currentView === 'voice_interview';
+
+    if (isUnsavedSession) {
+      setShowClearConfirm(true);
+    } else {
+      onClearChat();
+    }
+  };
+
   const isConversationActive = messages.length > 1;
 
   return (
     <div
-      className="vensaira-chat-window"
+      className={`vensaira-chat-window ${currentView !== 'chat' ? 'wide-view' : ''}`}
       role="dialog"
       aria-label="Vensaira AI Assistant Chat"
       aria-modal="true"
     >
-      {/* Header: Solid Vensaira Blue */}
-      <div className="vensaira-chat-header">
-        <div className="vensaira-chat-header-info">
-          <div className="vensaira-chat-header-avatar" aria-hidden="true">
-            <img
-              src="/assets/va-symbol-dark.png"
-              alt="VA"
-              className="vensaira-avatar-img"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            <span className="vensaira-avatar-fallback" style={{ display: 'none' }}>
-              VA
-            </span>
-          </div>
-          <div className="vensaira-chat-title-group">
-            <h2 className="vensaira-chat-title">Vensaira AI Assistant</h2>
-            <div className="vensaira-chat-subtitle">
-              {isConversationActive ? (
-                <>
-                  <span className="vensaira-status-dot" aria-hidden="true" />
-                  <span>Online</span>
-                </>
-              ) : (
-                'How can we help you today?'
-              )}
+      {/* Clear Chat Confirmation Modal for active sessions */}
+      {showClearConfirm && (
+        <div className="vensaira-confirm-overlay cb-fade-in" role="alertdialog" aria-modal="true" aria-label="Confirm Clear Chat">
+          <div className="vensaira-confirm-card">
+            <div className="vensaira-confirm-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <h4 className="vensaira-confirm-title">Clear Active Session?</h4>
+            <p className="vensaira-confirm-desc">
+              You have an active {currentView === 'application_flow' ? 'job application' : 'assessment / interview session'} in progress. Clearing the chat will reset your unsaved progress and return to the main welcome screen.
+            </p>
+            <div className="vensaira-confirm-actions">
+              <button
+                type="button"
+                className="vensaira-btn-outline"
+                onClick={() => setShowClearConfirm(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="vensaira-btn-primary vensaira-btn-danger"
+                onClick={() => {
+                  setShowClearConfirm(false);
+                  onClearChat();
+                }}
+              >
+                Clear Chat
+              </button>
             </div>
           </div>
         </div>
+      )}
 
-        <div className="vensaira-chat-header-controls">
-          <button
-            type="button"
-            className="vensaira-chat-header-btn"
-            onClick={onClose}
-            aria-label="Minimize Vensaira AI Assistant"
-            title="Minimize"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              aria-hidden="true"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            className="vensaira-chat-header-btn"
-            onClick={onClose}
-            aria-label="Close Vensaira AI Assistant"
-            title="Close"
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
-      </div>
+      {/* Header */}
+      <ChatbotHeader
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        isConversationActive={isConversationActive}
+        onClearChatClick={handleClearChatClick}
+        onClose={onClose}
+      />
 
-      {/* Messages Stream */}
-      <div className="vensaira-chat-body">
-        {messages.map((msg) => (
-          <div key={msg.id} className={`vensaira-chat-msg-row ${msg.sender}`}>
-            {msg.sender === 'assistant' && (
-              <div className="vensaira-chat-msg-avatar" aria-hidden="true">
-                <img
-                  src="/assets/va-symbol-dark.png"
-                  alt="VA"
-                  className="vensaira-avatar-img"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
-                  }}
-                />
-                <span className="vensaira-avatar-fallback" style={{ display: 'none' }}>
-                  VA
-                </span>
-              </div>
-            )}
-
-            <div className="vensaira-chat-msg-content">
-              <div className="vensaira-chat-bubble">{msg.text}</div>
-
-              {/* 6 Quick Action Buttons (2-column layout matching screenshot) */}
-              {msg.quickActions && msg.quickActions.length > 0 && (
-                <div
-                  className="vensaira-chat-quick-actions"
-                  role="group"
-                  aria-label="Suggested quick actions"
-                >
-                  {msg.quickActions.map((qa) => (
-                    <button
-                      key={qa.id}
-                      type="button"
-                      className="vensaira-chat-quick-btn"
-                      onClick={() => onQuickAction(qa.action, qa.label)}
-                    >
-                      <span className="vensaira-quick-icon">
-                        <QuickActionIcon type={qa.icon} />
-                      </span>
-                      <span className="vensaira-quick-label">{qa.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Selectable chips (e.g. Enquiry Interest Options) */}
-              {msg.chips && msg.chips.length > 0 && (
-                <div
-                  className="vensaira-chat-chips"
-                  role="group"
-                  aria-label="Area of interest options"
-                >
-                  {msg.chips.map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      className="vensaira-chat-chip"
-                      onClick={() => onSelectInterestOption(option)}
-                      disabled={msg.chipsDisabled}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Action buttons (e.g. Explore AI Solutions →, Continue to Contact Us →) */}
-              {msg.buttons && msg.buttons.length > 0 && (
-                <div className="vensaira-chat-actions">
-                  {msg.buttons.map((btn, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      className="vensaira-chat-action-btn"
-                      onClick={() => handleRouteClick(btn.route)}
-                    >
-                      <span>{btn.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Input Footer */}
-      <form className="vensaira-chat-footer" onSubmit={handleSubmit}>
-        <input
-          ref={inputRef}
-          type="text"
-          className="vensaira-chat-input"
-          placeholder="Ask about Vensaira..."
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          aria-label="Ask about Vensaira"
+      {/* Sub-View: Careers Intro */}
+      {currentView === 'careers_intro' && (
+        <CareersScreen
+          onStartApplication={() => setCurrentView('application_flow')}
+          onContinueApplication={async (query) => {
+            const res = await onContinueLookup(query);
+            if (res && res.success) {
+              setCurrentView('assessment_dashboard');
+            }
+            return res;
+          }}
+          onBackToChat={() => setCurrentView('chat')}
+          existingApplication={candidate}
         />
-        <button
-          type="submit"
-          className="vensaira-chat-send-btn"
-          disabled={!inputText.trim()}
-          aria-label="Send message"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
-      </form>
+      )}
+
+      {/* Sub-View: Candidate Application Flow */}
+      {currentView === 'application_flow' && (
+        <CandidateApplication
+          onSubmitted={(newAppId, newCandidate) => {
+            setApplicationId(newAppId);
+            setCandidate(newCandidate);
+            setCurrentView('application_success');
+          }}
+          onCancel={() => setCurrentView('careers_intro')}
+          onBackToIntro={() => setCurrentView('careers_intro')}
+        />
+      )}
+
+      {/* Sub-View: Application Success Screen */}
+      {currentView === 'application_success' && (
+        <ApplicationSuccess
+          applicationId={applicationId}
+          candidate={candidate}
+          onStartAssessment={() => setCurrentView('technical_assessment')}
+          onViewStatus={() => setCurrentView('assessment_dashboard')}
+          onBackToChat={() => setCurrentView('chat')}
+        />
+      )}
+
+      {/* Sub-View: Candidate Assessment Dashboard */}
+      {currentView === 'assessment_dashboard' && (
+        <AssessmentDashboard
+          candidate={candidate}
+          assessment={assessment}
+          interview={interview}
+          onStartTechnicalAssessment={() => setCurrentView('technical_assessment')}
+          onStartVoiceInterview={() => setCurrentView('voice_interview')}
+          onBack={() => setCurrentView('careers_intro')}
+        />
+      )}
+
+      {/* Sub-View: Technical Skills Assessment */}
+      {currentView === 'technical_assessment' && (
+        <TechnicalAssessment
+          applicationId={applicationId}
+          existingAssessment={assessment}
+          onCompleted={(updatedAssessment) => {
+            setAssessment(updatedAssessment);
+            setCurrentView('assessment_dashboard');
+          }}
+          onBack={() => setCurrentView('assessment_dashboard')}
+        />
+      )}
+
+      {/* Sub-View: AI Voice Interview */}
+      {currentView === 'voice_interview' && (
+        <VoiceInterview
+          applicationId={applicationId}
+          candidate={candidate}
+          onCompleted={(updatedInterview) => {
+            setInterview(updatedInterview);
+            setCurrentView('assessment_dashboard');
+          }}
+          onBack={() => setCurrentView('assessment_dashboard')}
+        />
+      )}
+
+      {/* Default Chat View */}
+      {currentView === 'chat' && (
+        <>
+          <ChatbotMessages
+            messages={messages}
+            messagesEndRef={messagesEndRef}
+            onQuickAction={onQuickAction}
+            onSelectInterestOption={onSelectInterestOption}
+            onActionClick={handleActionClick}
+          />
+
+          <ChatbotInput
+            inputRef={inputRef}
+            inputText={inputText}
+            setInputText={setInputText}
+            onSubmit={() => onSendMessage(inputText)}
+          />
+        </>
+      )}
     </div>
   );
 }

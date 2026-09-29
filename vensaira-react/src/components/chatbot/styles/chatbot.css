@@ -1,0 +1,321 @@
+/**
+ * VENSAIRA AI — Assistant Chatbot CSS Entry
+ * Enterprise-grade, clean, professional assistant widget
+ * Restored to original approved styling from commit 11002a2
+ */
+
+@import './chatbot-header.css';
+@import './chatbot-messages.css';
+@import './chatbot-application.css';
+@import './chatbot-assessment.css';
+
+/* ── Floating Launcher Button ── */
+.vensaira-chatbot-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1500;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #0878C9;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(8, 120, 201, 0.35), 0 2px 8px rgba(9, 22, 38, 0.12);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background-color 0.2s ease;
+  padding: 0;
+}
+
+.vensaira-chatbot-btn:hover {
+  transform: translateY(-2px);
+  background-color: #0667ad;
+  box-shadow: 0 8px 24px rgba(8, 120, 201, 0.45), 0 4px 12px rgba(9, 22, 38, 0.15);
+}
+
+.vensaira-chatbot-btn:active {
+  transform: translateY(0);
+}
+
+.vensaira-chatbot-btn:focus-visible {
+  outline: 2px solid #00BFFF;
+  outline-offset: 3px;
+}
+
+/* ── Chat Window Layout ── */
+.vensaira-chat-window {
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+  width: 380px;
+  height: 540px;
+  max-height: calc(100vh - 120px);
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px -8px rgba(9, 22, 38, 0.18), 0 6px 16px -4px rgba(9, 22, 38, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1500;
+  box-sizing: border-box;
+  animation: vensairaChatFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.vensaira-chat-window.wide-view {
+  width: 440px;
+  height: 640px;
+  max-height: calc(100vh - 80px);
+}
+
+@keyframes vensairaChatFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Clear Chat Confirmation Dialog Overlay ── */
+.vensaira-confirm-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(16, 43, 72, 0.65);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.vensaira-confirm-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 22px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.vensaira-confirm-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #FEE2E2;
+  margin: 0 auto 12px;
+}
+
+.vensaira-confirm-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #102B48;
+  margin: 0 0 8px;
+}
+
+.vensaira-confirm-desc {
+  font-size: 12.5px;
+  color: #64748B;
+  line-height: 1.45;
+  margin: 0 0 18px;
+}
+
+.vensaira-confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.vensaira-confirm-actions button {
+  flex: 1;
+}
+
+.vensaira-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background-color: #0878C9;
+  color: #FFFFFF;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vensaira-btn-primary:hover:not(:disabled) {
+  background-color: #065e9e;
+}
+
+.vensaira-btn-primary:disabled {
+  background-color: #CBD5E1;
+  cursor: not-allowed;
+}
+
+.vensaira-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background-color: #F0F7FD;
+  color: #0878C9;
+  border: 1px solid #BAE0FD;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vensaira-btn-secondary:hover {
+  background-color: #E0EBF5;
+}
+
+.vensaira-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: transparent;
+  color: #64748B;
+  border: 1px solid #CBD5E1;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vensaira-btn-outline:hover:not(:disabled) {
+  border-color: #0878C9;
+  color: #0878C9;
+}
+
+.vensaira-btn-text {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px;
+}
+
+.vensaira-btn-text:hover {
+  color: #0878C9;
+}
+
+.vensaira-btn-danger {
+  background-color: #DC2626 !important;
+  border-color: #DC2626 !important;
+  color: #FFFFFF !important;
+}
+
+.vensaira-btn-danger:hover {
+  background-color: #B91C1C !important;
+  border-color: #B91C1C !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.cb-fade-in {
+  animation: cbFadeIn 0.22s ease forwards;
+}
+
+@keyframes cbFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive Viewports ── */
+@media (max-width: 640px) {
+  .vensaira-chatbot-btn {
+    right: 16px;
+    bottom: 16px;
+    width: 54px;
+    height: 54px;
+  }
+
+  .vensaira-chat-window {
+    right: 12px;
+    bottom: 78px;
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    height: calc(100vh - 96px);
+    max-height: 560px;
+    border-radius: 14px;
+  }
+
+  .vensaira-chat-window.wide-view {
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    height: calc(100vh - 96px);
+    max-height: 90vh;
+  }
+
+  .vensaira-chat-msg-row.assistant .vensaira-chat-msg-content {
+    max-width: calc(100% - 38px);
+  }
+
+  .vensaira-chat-msg-row.user .vensaira-chat-msg-content {
+    max-width: 88%;
+  }
+
+  .vensaira-chat-header {
+    padding: 12px 14px;
+  }
+
+  .vensaira-chat-body {
+    padding: 12px 10px;
+  }
+
+  .vensaira-chat-quick-actions {
+    gap: 6px;
+  }
+
+  .vensaira-chat-quick-btn {
+    padding: 8px 8px;
+    gap: 6px;
+  }
+
+  .vensaira-quick-label {
+    font-size: 11.5px;
+  }
+
+  .vensaira-chat-footer {
+    padding: 10px 12px;
+  }
+}

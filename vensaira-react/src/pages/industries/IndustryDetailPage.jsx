@@ -26,8 +26,33 @@ export default function IndustryDetailPage({ industry }) {
         alignItems: 'center'
       }}>
         <div className="container" style={{ maxWidth: 1200, margin: '0 auto', width: '100%' }}>
-          <Link to="/#industries" style={{ color: '#1769D1', textDecoration: 'none', fontWeight: 600, display: 'inline-block', marginBottom: 24 }}>
-            &larr; Back to Industries
+          <Link
+            to="/#industries"
+            style={{
+              color: '#38BDF8',
+              textDecoration: 'none',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              marginBottom: 24,
+              fontSize: '15px',
+              transition: 'color 0.2s ease, transform 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#7DD3FC';
+              e.currentTarget.style.transform = 'translateX(-3px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = '#38BDF8';
+              e.currentTarget.style.transform = 'none';
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            <span>Back to Industries</span>
           </Link>
           <span style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1769D1', marginBottom: 12 }}>
             Industry Focus

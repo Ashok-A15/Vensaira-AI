@@ -87,13 +87,19 @@ function SkipLink() {
 function AppInner() {
   const { pathname, hash } = useLocation();
 
-  // Handle hash links on homepage (e.g. /#about)
+  // Handle hash links on homepage (e.g. /#about, /#industries)
   useEffect(() => {
     if (hash) {
-      setTimeout(() => {
+      const scrollToEl = () => {
         const el = document.getElementById(hash.slice(1));
         el?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      };
+      const t1 = setTimeout(scrollToEl, 100);
+      const t2 = setTimeout(scrollToEl, 300);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
     }
   }, [pathname, hash]);
 

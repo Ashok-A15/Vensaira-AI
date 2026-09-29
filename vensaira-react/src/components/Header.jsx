@@ -12,10 +12,22 @@ const AI_SOLUTIONS_ITEMS = [
   { label: 'AI eLearning', href: '/ai-solutions/ai-elearning' },
 ];
 
+const INDUSTRIES_ITEMS = [
+  { label: 'Healthcare', href: '/industries/healthcare' },
+  { label: 'Education & eLearning', href: '/industries/education' },
+  { label: 'Logistics & Transportation', href: '/industries/logistics' },
+  { label: 'Financial Services', href: '/industries/financial-services' },
+  { label: 'Retail & E-Commerce', href: '/industries/retail-ecommerce' },
+  { label: 'Manufacturing', href: '/industries/manufacturing' },
+  { label: 'Technology & SaaS', href: '/industries/technology-saas' },
+  { label: 'Professional Services', href: '/industries/professional-services' },
+];
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [aiDropdownOpen, setAiDropdownOpen] = useState(false);
+  const [industriesDropdownOpen, setIndustriesDropdownOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const location = useLocation();
 
@@ -26,15 +38,19 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu and dropdowns on route change
   useEffect(() => {
     setMobileOpen(false);
-    setDropdownOpen(false);
+    setAiDropdownOpen(false);
+    setIndustriesDropdownOpen(false);
   }, [location.pathname, location.hash]);
 
   // Close dropdown on outside click
   const handleDocClick = useCallback((e) => {
-    if (!e.target.closest('.nav-dropdown')) setDropdownOpen(false);
+    if (!e.target.closest('.nav-dropdown')) {
+      setAiDropdownOpen(false);
+      setIndustriesDropdownOpen(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -133,12 +149,15 @@ export default function Header() {
       setActiveSection(id);
     }
     setMobileOpen(false);
-    setDropdownOpen(false);
+    setAiDropdownOpen(false);
+    setIndustriesDropdownOpen(false);
   };
 
   // Home link handler
   const handleHomeClick = () => {
     setMobileOpen(false);
+    setAiDropdownOpen(false);
+    setIndustriesDropdownOpen(false);
     if (location.pathname === '/') {
       window.history.pushState(null, '', '/');
       setActiveSection('home');
@@ -155,6 +174,8 @@ export default function Header() {
           aria-label="VENSAIRA AI Home"
           onClick={() => {
             setMobileOpen(false);
+            setAiDropdownOpen(false);
+            setIndustriesDropdownOpen(false);
             if (location.pathname === '/') {
               window.history.pushState(null, '', '/');
               setActiveSection('home');
@@ -196,21 +217,43 @@ export default function Header() {
             </li>
 
             {/* AI Solutions Dropdown */}
-            <li className={`nav-dropdown${dropdownOpen ? ' open' : ''}`} role="none">
+            <li
+              className={`nav-dropdown${aiDropdownOpen ? ' open' : ''}`}
+              role="none"
+              onMouseEnter={() => {
+                if (window.innerWidth > 1024) {
+                  setAiDropdownOpen(true);
+                  setIndustriesDropdownOpen(false);
+                }
+              }}
+              onMouseLeave={() => {
+                if (window.innerWidth > 1024) {
+                  setAiDropdownOpen(false);
+                }
+              }}
+            >
               <button
                 className={`nav-link dropdown-toggle${isItemActive('ai-solutions') ? ' active' : ''}`}
-                aria-expanded={dropdownOpen}
+                aria-expanded={aiDropdownOpen}
                 aria-haspopup="true"
                 role="menuitem"
-                onClick={(e) => { e.stopPropagation(); setDropdownOpen(!dropdownOpen); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setAiDropdownOpen(prev => !prev);
+                  setIndustriesDropdownOpen(false);
+                }}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setDropdownOpen(!dropdownOpen); }
-                  if (e.key === 'Escape') setDropdownOpen(false);
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setAiDropdownOpen(prev => !prev);
+                    setIndustriesDropdownOpen(false);
+                  }
+                  if (e.key === 'Escape') setAiDropdownOpen(false);
                 }}
               >
                 <span>AI Solutions</span>
                 <svg
-                  className={`dropdown-chevron${dropdownOpen ? ' open' : ''}`}
+                  className={`dropdown-chevron${aiDropdownOpen ? ' open' : ''}`}
                   width="10"
                   height="6"
                   viewBox="0 0 10 6"
@@ -238,7 +281,7 @@ export default function Header() {
                           handleAnchorClick(e, item.href);
                         } else {
                           setMobileOpen(false);
-                          setDropdownOpen(false);
+                          setAiDropdownOpen(false);
                         }
                       }}
                     >
@@ -249,15 +292,76 @@ export default function Header() {
               </ul>
             </li>
 
-            <li role="none">
-              <a
-                href="/#industries"
-                className={`nav-link${isItemActive('industries') ? ' active' : ''}`}
+            {/* Industries Dropdown */}
+            <li
+              className={`nav-dropdown${industriesDropdownOpen ? ' open' : ''}`}
+              role="none"
+              onMouseEnter={() => {
+                if (window.innerWidth > 1024) {
+                  setIndustriesDropdownOpen(true);
+                  setAiDropdownOpen(false);
+                }
+              }}
+              onMouseLeave={() => {
+                if (window.innerWidth > 1024) {
+                  setIndustriesDropdownOpen(false);
+                }
+              }}
+            >
+              <button
+                className={`nav-link dropdown-toggle${isItemActive('industries') ? ' active' : ''}`}
+                aria-expanded={industriesDropdownOpen}
+                aria-haspopup="true"
                 role="menuitem"
-                onClick={(e) => handleAnchorClick(e, '/#industries')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIndustriesDropdownOpen(prev => !prev);
+                  setAiDropdownOpen(false);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setIndustriesDropdownOpen(prev => !prev);
+                    setAiDropdownOpen(false);
+                  }
+                  if (e.key === 'Escape') setIndustriesDropdownOpen(false);
+                }}
               >
-                Industries
-              </a>
+                <span>Industries</span>
+                <svg
+                  className={`dropdown-chevron${industriesDropdownOpen ? ' open' : ''}`}
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M1 1L5 5L9 1"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <ul className="dropdown-menu" role="menu">
+                {INDUSTRIES_ITEMS.map((item) => (
+                  <li key={item.label} role="none">
+                    <Link
+                      to={item.href}
+                      role="menuitem"
+                      onClick={() => {
+                        setMobileOpen(false);
+                        setIndustriesDropdownOpen(false);
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
 
             <li role="none">

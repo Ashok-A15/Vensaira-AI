@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/header.css';
@@ -12,6 +12,11 @@ export default function ElearningHeader() {
 
   const isCoursesActive = location.pathname.startsWith('/elearning/courses');
   const isProjectsActive = location.pathname.startsWith('/elearning/projects');
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -131,6 +136,38 @@ export default function ElearningHeader() {
           )}
         </button>
 
+      </div>
+
+      {/* Sub-bar directly below eLearning branding/header area */}
+      <div className="el-navbar-subbar">
+        <div className="el-navbar-subbar-inner">
+          <Link
+            to="/"
+            className="el-back-to-main"
+            aria-label="Back to Main Website"
+            onClick={() => {
+              setMobileOpen(false);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <svg
+              className="el-back-arrow"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            <span>Back to Main Website</span>
+          </Link>
+        </div>
       </div>
     </header>
   );
