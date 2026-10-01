@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import MissionVision from './pages/MissionVision';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
 import { AuthProvider } from './context/AuthContext';
 
 import SoftwareEngineeringPage from './pages/services/SoftwareEngineeringPage';
@@ -121,6 +123,8 @@ function AppInner() {
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/mission-vision" element={<MissionVision />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsConditions />} />
         
         {/* Services Routes */}
         <Route path="/services/software-engineering" element={<SoftwareEngineeringPage />} />

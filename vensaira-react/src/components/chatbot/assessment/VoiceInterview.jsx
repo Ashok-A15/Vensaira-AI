@@ -33,15 +33,36 @@ export default function VoiceInterview({
   const [errorMsg, setErrorMsg] = useState('');
 
   const recognitionRef = useRef(null);
-  const synthRef = useRef(window.speechSynthesis || null);
+  const synthRef = useRef(typeof window !== 'undefined' ? window.speechSynthesis : null);
 
-  // Check speech recognition support
+  // Check speech recognition and synthesis support
   useEffect(() => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = typeof window !== 'undefined' ? (window.SpeechRecognition || window.webkitSpeechRecognition) : null;
     if (!SpeechRecognition) {
       setMicPermission('unsupported');
     }
   }, []);
+
+  if (!applicationId) {
+    return (
+      <div className="vensaira-interview-screen cb-fade-in" style={{ padding: '32px 20px', textAlign: 'center' }}>
+        <div className="vensaira-confirm-icon" style={{ backgroundColor: '#F0F7FD', margin: '0 auto 14px' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0878C9" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </div>
+        <h4 className="vensaira-card-title">Application Required</h4>
+        <p className="vensaira-card-desc" style={{ maxWidth: '340px', margin: '8px auto 20px', color: '#64748B' }}>
+          Please complete and submit your candidate application before starting the AI Voice Interview.
+        </p>
+        <button type="button" className="vensaira-btn-primary" onClick={onBack}>
+          Return to Careers
+        </button>
+      </div>
+    );
+  }
 
   // Speak active question using SpeechSynthesis
   const speakText = (text) => {
@@ -194,16 +215,17 @@ export default function VoiceInterview({
   };
 
   const handleCompleteInterview = async (finalTranscript) => {
+    if (isSubmitting) return;
     setIsSubmitting(true);
     try {
       const res = await InterviewApi.evaluateInterview(applicationId, finalTranscript || transcript);
-      if (res && res.success) {
+      if (res && res.success && res.interviewSession) {
         onCompleted(res.interviewSession);
       } else {
-        setErrorMsg(res?.message || 'Failed to complete interview evaluation.');
+        setErrorMsg(res?.message || "We couldn't evaluate your interview responses right now. Please try again.");
       }
     } catch (err) {
-      setErrorMsg(err.message || 'Error processing interview results.');
+      setErrorMsg(err?.message || "We couldn't evaluate your interview responses right now. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -290,7 +312,7 @@ export default function VoiceInterview({
             </div>
             <p className="vensaira-mic-desc">
               {micPermission === 'unsupported'
-                ? 'Web Speech API is not supported in this browser. You can seamlessly participate using the text response fallback.'
+                ? 'AI Voice Interview is currently unavailable in this browser environment. You can seamlessly participate using the interactive text response fallback.'
                 : micPermission === 'denied'
                 ? 'Microphone permission was denied. You can participate using the text response box, or enable microphone in browser settings.'
                 : 'Microphone access will be requested when you begin speaking. Both voice and text answers are supported.'}

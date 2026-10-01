@@ -20,12 +20,10 @@ export default function ChatbotHeader({
         return 'Job Application';
       case 'application_success':
         return 'Application Received';
-      case 'assessment_dashboard':
-        return 'Candidate Assessment Center';
-      case 'technical_assessment':
-        return 'Technical Skills Assessment';
-      case 'voice_interview':
-        return 'AI Voice Interview';
+      case 'ai_assessment_start':
+        return 'AI Assessment';
+      case 'application_status':
+        return 'Application Status';
       default:
         return isConversationActive ? (
           <>

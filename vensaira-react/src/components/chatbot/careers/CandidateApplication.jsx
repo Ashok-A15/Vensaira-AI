@@ -3,6 +3,7 @@
  * Multi-step candidate job application flow.
  */
 
+import { useState } from 'react';
 import { useCandidateApplication } from '../hooks/useCandidateApplication';
 import FileUpload from '../components/FileUpload';
 import CandidateReview from './CandidateReview';
@@ -18,6 +19,8 @@ export default function CandidateApplication({
   onCancel,
   onBackToIntro
 }) {
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+
   const {
     currentStep,
     setCurrentStep,
@@ -47,23 +50,82 @@ export default function CandidateApplication({
     handleLinkedInChoice,
     handleLinkedInUrlSubmit,
     handleEditField,
-    handleFinalSubmit
+    handleFinalSubmit,
+    resetApplication
   } = useCandidateApplication({ onSubmitted });
 
+  // Robust back navigation preserving candidate data across all branches
   const handleBackNavigation = () => {
     if (editingField) {
       handleEditField(null, 11);
     } else if (currentStep > 1) {
-      if (currentStep === 10.5) setCurrentStep(10);
-      else if (currentStep === 9 && formData.relocation === 'No') setCurrentStep(7);
-      else setCurrentStep(currentStep - 1);
+      if (currentStep === 11) {
+        if (formData.linkedinChoice === 'Yes') {
+          setCurrentStep(10.5);
+        } else {
+          setCurrentStep(10);
+        }
+      } else if (currentStep === 10.5) {
+        setCurrentStep(10);
+      } else if (currentStep === 10) {
+        setCurrentStep(9);
+      } else if (currentStep === 9) {
+        if (formData.relocation === 'No') {
+          setCurrentStep(7);
+        } else {
+          setCurrentStep(8);
+        }
+      } else {
+        setCurrentStep(currentStep - 1);
+      }
     } else {
       onBackToIntro();
     }
   };
 
+  const handleConfirmCancel = () => {
+    setShowCancelConfirm(false);
+    resetApplication();
+    onCancel();
+  };
+
   return (
     <div className="vensaira-app-flow cb-fade-in">
+      {/* Cancel Confirmation Modal */}
+      {showCancelConfirm && (
+        <div className="vensaira-confirm-overlay cb-fade-in" role="alertdialog" aria-modal="true" aria-label="Cancel Application Confirmation">
+          <div className="vensaira-confirm-card">
+            <div className="vensaira-confirm-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <h4 className="vensaira-confirm-title">Cancel Application?</h4>
+            <p className="vensaira-confirm-desc">
+              Are you sure you want to leave your application? Your current progress may be lost.
+            </p>
+            <div className="vensaira-confirm-actions">
+              <button
+                type="button"
+                className="vensaira-btn-outline"
+                onClick={() => setShowCancelConfirm(false)}
+              >
+                Continue Application
+              </button>
+              <button
+                type="button"
+                className="vensaira-btn-primary vensaira-btn-danger"
+                onClick={handleConfirmCancel}
+              >
+                Cancel Application
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top flow indicator */}
       <div className="vensaira-flow-header">
         <button
@@ -89,14 +151,24 @@ export default function CandidateApplication({
         <button
           type="button"
           className="vensaira-flow-cancel-btn"
-          onClick={onCancel}
+          onClick={() => setShowCancelConfirm(true)}
           title="Cancel Application"
         >
           Cancel
         </button>
       </div>
 
-      <div className="vensaira-flow-body">
+      {currentStep === 11 ? (
+        <CandidateReview
+          formData={formData}
+          onEditField={handleEditField}
+          onBack={handleBackNavigation}
+          onSubmit={handleFinalSubmit}
+          isSubmitting={isSubmitting}
+          submitError={submitError}
+        />
+      ) : (
+        <div className="vensaira-flow-body">
         {/* Step 1: First Name */}
         {currentStep === 1 && (
           <div className="vensaira-step-card cb-fade-in">
@@ -109,6 +181,7 @@ export default function CandidateApplication({
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 autoFocus
+                aria-label="First Name"
               />
               {inputError && <div className="vensaira-step-error">{inputError}</div>}
               <button type="submit" className="vensaira-step-submit-btn">Continue</button>
@@ -128,6 +201,7 @@ export default function CandidateApplication({
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 autoFocus
+                aria-label="Last Name"
               />
               {inputError && <div className="vensaira-step-error">{inputError}</div>}
               <button type="submit" className="vensaira-step-submit-btn">Continue</button>
@@ -147,6 +221,7 @@ export default function CandidateApplication({
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 autoFocus
+                aria-label="Email Address"
               />
               {inputError && <div className="vensaira-step-error">{inputError}</div>}
               <button type="submit" className="vensaira-step-submit-btn">
@@ -220,7 +295,7 @@ export default function CandidateApplication({
             {selectedSkills.includes('Other') && (
               <div className="vensaira-other-skill-wrap cb-fade-in">
                 <label className="vensaira-other-skill-label" htmlFor="cb-other-skills-input">
-                  Please specify your other skills:
+                  Enter your other skills:
                 </label>
                 <input
                   id="cb-other-skills-input"
@@ -347,6 +422,7 @@ export default function CandidateApplication({
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 autoFocus
+                aria-label="LinkedIn URL"
               />
               {inputError && <div className="vensaira-step-error">{inputError}</div>}
               <button type="submit" className="vensaira-step-submit-btn">Review Application</button>
@@ -354,17 +430,8 @@ export default function CandidateApplication({
           </div>
         )}
 
-        {/* Step 11: Candidate Review */}
-        {currentStep === 11 && (
-          <CandidateReview
-            formData={formData}
-            onEditField={handleEditField}
-            onSubmit={handleFinalSubmit}
-            isSubmitting={isSubmitting}
-            submitError={submitError}
-          />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

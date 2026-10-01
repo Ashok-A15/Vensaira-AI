@@ -100,8 +100,8 @@ export default function Footer() {
               &copy; {currentYear} Vensaira AI. All rights reserved.
             </div>
             <div className="footer-legal">
-              <Link to="#">Privacy Policy</Link>
-              <Link to="#">Terms of Use</Link>
+              <Link to="/privacy-policy">Privacy Policy</Link>
+              <Link to="/terms">Terms of Use</Link>
             </div>
           </div>
         </div>

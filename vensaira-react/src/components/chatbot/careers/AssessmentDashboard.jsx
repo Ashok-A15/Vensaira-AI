@@ -98,6 +98,30 @@ export default function AssessmentDashboard({
         </button>
       </div>
 
+      {!candidate?.applicationId ? (
+        <div className="vensaira-dash-content" style={{ padding: '24px 16px', textAlign: 'center' }}>
+          <div className="vensaira-card cb-fade-in" style={{ padding: '28px 20px', textAlign: 'center' }}>
+            <div className="vensaira-confirm-icon" style={{ backgroundColor: '#F0F7FD', margin: '0 auto 14px' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0878C9" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <h4 className="vensaira-card-title">Application Required</h4>
+            <p className="vensaira-card-desc" style={{ maxWidth: '360px', margin: '8px auto 18px', color: '#64748B' }}>
+              No active job application was found. Please complete and submit your job application before accessing the Candidate Assessment Center.
+            </p>
+            <button
+              type="button"
+              className="vensaira-btn-primary"
+              onClick={onBack}
+            >
+              Start Job Application
+            </button>
+          </div>
+        </div>
+      ) : (
       <div className="vensaira-dash-content">
         {/* Tab 1: Overview */}
         {activeTab === 'overview' && (
@@ -512,6 +536,7 @@ export default function AssessmentDashboard({
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }

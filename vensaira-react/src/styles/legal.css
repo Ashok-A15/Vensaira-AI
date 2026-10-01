@@ -1,0 +1,166 @@
+/* ============================================================
+   VENSAIRA AI — Legal Pages Styling (Privacy Policy & Terms)
+   Clean, professional legal document layout.
+   Uses Vensaira Design System:
+   - Deep Navy: #0D2138
+   - Electric Blue: #0878C9
+   - White / Ivory Background
+   - Plus Jakarta Sans & Space Grotesk typography
+   ============================================================ */
+
+.legal-page-wrapper {
+  min-height: 100vh;
+  padding-top: calc(var(--nav-height) + 48px);
+  padding-bottom: 96px;
+  background-color: var(--white);
+  color: var(--text-dark);
+  position: relative;
+  z-index: 1;
+}
+
+.legal-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header section of legal doc */
+.legal-header {
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+}
+
+.legal-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: var(--deep-navy);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.legal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.legal-version-badge {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--electric-blue);
+  background: rgba(8, 120, 201, 0.08);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.legal-effective-date {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--deep-navy);
+  margin-top: 4px;
+}
+
+/* Content typography */
+.legal-content {
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #2D3748;
+}
+
+.legal-intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #1A202C;
+  margin-bottom: 32px;
+}
+
+.legal-intro p {
+  margin-bottom: 16px;
+}
+
+.legal-section {
+  margin-top: 36px;
+  margin-bottom: 24px;
+}
+
+.legal-section-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--deep-navy);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+.legal-section p {
+  margin-bottom: 14px;
+}
+
+.legal-section ul {
+  margin: 12px 0 18px 24px;
+  padding: 0;
+  list-style-type: disc;
+}
+
+.legal-section li {
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+
+/* Special links inside legal content */
+.legal-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--electric-blue);
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 8px;
+  padding: 4px 0;
+  transition: var(--transition-fast);
+}
+
+.legal-inline-link:hover {
+  text-decoration: underline;
+  color: #065B99;
+}
+
+.legal-contact-block {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-top: 14px;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .legal-page-wrapper {
+    padding-top: calc(var(--nav-height) + 32px);
+    padding-bottom: 64px;
+  }
+
+  .legal-container {
+    padding: 0 20px;
+  }
+
+  .legal-content {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .legal-section-title {
+    font-size: 1.25rem;
+  }
+}

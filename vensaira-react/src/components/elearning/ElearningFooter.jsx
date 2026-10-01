@@ -54,8 +54,8 @@ export default function ElearningFooter() {
               </ul>
               <h4 className="el-footer-col-title" style={{ marginTop: '32px' }}>Legal</h4>
               <ul className="el-footer-links">
-                <li><Link to="#">Terms & Conditions</Link></li>
-                <li><Link to="#">Privacy Policy</Link></li>
+                <li><Link to="/terms">Terms & Conditions</Link></li>
+                <li><Link to="/privacy-policy">Privacy Policy</Link></li>
               </ul>
             </div>
 

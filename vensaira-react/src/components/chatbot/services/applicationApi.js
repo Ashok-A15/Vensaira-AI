@@ -15,21 +15,17 @@ export const ApplicationApi = {
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || 'Failed to submit application');
+        return {
+          success: false,
+          message: data.message || "We couldn't submit your application right now. Please try again."
+        };
       }
       return data;
     } catch (err) {
-      console.warn('[ApplicationApi Warning] Fallback application submission:', err);
-      const fallbackId = `VA-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+      console.error('[ApplicationApi Error] Failed to submit candidate application:', err);
       return {
-        success: true,
-        applicationId: fallbackId,
-        candidate: {
-          ...applicationData,
-          applicationId: fallbackId,
-          status: 'submitted',
-          createdAt: new Date().toISOString()
-        }
+        success: false,
+        message: "We couldn't submit your application right now. Please check your connection and try again."
       };
     }
   },

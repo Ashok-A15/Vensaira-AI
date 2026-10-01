@@ -6,6 +6,8 @@
 .vensaira-dashboard {
   display: flex;
   flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
   height: 100%;
   box-sizing: border-box;
 }
@@ -189,6 +191,8 @@
 .vensaira-assessment-screen {
   display: flex;
   flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
   height: 100%;
 }
 
@@ -315,6 +319,8 @@
 .vensaira-interview-screen {
   display: flex;
   flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
   height: 100%;
 }
 

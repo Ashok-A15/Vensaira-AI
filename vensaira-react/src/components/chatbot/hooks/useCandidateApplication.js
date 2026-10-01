@@ -3,9 +3,25 @@
  * Manages the multi-step candidate application process, skill selections, resume handling, and submission.
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { ApplicationApi } from '../services/applicationApi';
 import { isValidEmail, isValidUrl } from '../utils/validation';
+
+const INITIAL_FORM_DATA = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  experience: '',
+  education: '',
+  skills: [],
+  otherSkill: '',
+  relocation: '',
+  relocationLocation: '',
+  resume: null, // { name, size, type, dataUrl }
+  linkedinChoice: '',
+  linkedin: '',
+  appliedRole: 'Software Engineer'
+};
 
 export function useCandidateApplication({ onSubmitted }) {
   // Step tracker:
@@ -15,21 +31,7 @@ export function useCandidateApplication({ onSubmitted }) {
   const [editingField, setEditingField] = useState(null);
 
   // Candidate Data State
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    experience: '',
-    education: '',
-    skills: [],
-    otherSkill: '',
-    relocation: '',
-    relocationLocation: '',
-    resume: null, // { name, size, type, dataUrl }
-    linkedinChoice: '',
-    linkedin: '',
-    appliedRole: 'Software Engineer'
-  });
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   const [inputVal, setInputVal] = useState('');
   const [inputError, setInputError] = useState('');
@@ -38,15 +40,39 @@ export function useCandidateApplication({ onSubmitted }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
+  // Keep inputVal and skills in sync with formData whenever currentStep changes
+  // Ensures navigating Back/Forward preserves previously entered values!
+  useEffect(() => {
+    setInputError('');
+    if (currentStep === 1) {
+      setInputVal(formData.firstName || '');
+    } else if (currentStep === 2) {
+      setInputVal(formData.lastName || '');
+    } else if (currentStep === 3) {
+      setInputVal(formData.email || '');
+    } else if (currentStep === 6) {
+      if (formData.skills && formData.skills.length > 0) {
+        const baseSkills = formData.skills.filter((s) => !s.startsWith('Other'));
+        const hasOther = formData.skills.some((s) => s === 'Other' || s.startsWith('Other:'));
+        setSelectedSkills(hasOther ? [...baseSkills, 'Other'] : baseSkills);
+        setOtherSkillText(formData.otherSkill || '');
+      }
+    } else if (currentStep === 10.5) {
+      setInputVal(formData.linkedin && formData.linkedin !== 'Not provided' ? formData.linkedin : '');
+    } else {
+      setInputVal('');
+    }
+  }, [currentStep, editingField, formData.firstName, formData.lastName, formData.email, formData.skills, formData.otherSkill, formData.linkedin]);
+
   // Step 1: First Name
   const handleFirstNameSubmit = useCallback((e) => {
     if (e) e.preventDefault();
-    if (!inputVal.trim()) {
+    const val = inputVal.trim();
+    if (!val) {
       setInputError('Please enter your first name.');
       return;
     }
-    setFormData((prev) => ({ ...prev, firstName: inputVal.trim() }));
-    setInputVal('');
+    setFormData((prev) => ({ ...prev, firstName: val }));
     setInputError('');
     if (editingField) {
       setEditingField(null);
@@ -59,12 +85,12 @@ export function useCandidateApplication({ onSubmitted }) {
   // Step 2: Last Name
   const handleLastNameSubmit = useCallback((e) => {
     if (e) e.preventDefault();
-    if (!inputVal.trim()) {
+    const val = inputVal.trim();
+    if (!val) {
       setInputError('Please enter your last name.');
       return;
     }
-    setFormData((prev) => ({ ...prev, lastName: inputVal.trim() }));
-    setInputVal('');
+    setFormData((prev) => ({ ...prev, lastName: val }));
     setInputError('');
     if (editingField) {
       setEditingField(null);
@@ -77,13 +103,13 @@ export function useCandidateApplication({ onSubmitted }) {
   // Step 3: Email Input -> Advances directly to next step (OTP verification removed)
   const handleEmailSubmit = useCallback((e) => {
     if (e) e.preventDefault();
-    if (!isValidEmail(inputVal)) {
+    const val = inputVal.trim();
+    if (!val || !isValidEmail(val)) {
       setInputError('Please enter a valid email address.');
       return;
     }
-    const emailEntered = inputVal.trim().toLowerCase();
+    const emailEntered = val.toLowerCase();
     setFormData((prev) => ({ ...prev, email: emailEntered }));
-    setInputVal('');
     setInputError('');
     if (editingField) {
       setEditingField(null);
@@ -227,12 +253,12 @@ export function useCandidateApplication({ onSubmitted }) {
   // Step 10.5: LinkedIn URL
   const handleLinkedInUrlSubmit = useCallback((e) => {
     if (e) e.preventDefault();
-    if (!isValidUrl(inputVal)) {
+    const val = inputVal.trim();
+    if (!val || !isValidUrl(val)) {
       setInputError('Please enter a valid LinkedIn URL.');
       return;
     }
-    setFormData((prev) => ({ ...prev, linkedin: inputVal.trim() }));
-    setInputVal('');
+    setFormData((prev) => ({ ...prev, linkedin: val }));
     setInputError('');
     if (editingField) {
       setEditingField(null);
@@ -243,21 +269,24 @@ export function useCandidateApplication({ onSubmitted }) {
   // Step 11: Edit specific field
   const handleEditField = useCallback((field, targetStep) => {
     setEditingField(field);
-    if (field === 'firstName') setInputVal(formData.firstName);
-    if (field === 'lastName') setInputVal(formData.lastName);
-    if (field === 'email') setInputVal(formData.email);
+    if (field === 'firstName') setInputVal(formData.firstName || '');
+    if (field === 'lastName') setInputVal(formData.lastName || '');
+    if (field === 'email') setInputVal(formData.email || '');
     if (field === 'skills') {
-      const baseSkills = formData.skills.filter((s) => !s.startsWith('Other'));
-      const hasOther = formData.skills.some((s) => s === 'Other' || s.startsWith('Other:'));
+      const baseSkills = (formData.skills || []).filter((s) => !s.startsWith('Other'));
+      const hasOther = (formData.skills || []).some((s) => s === 'Other' || s.startsWith('Other:'));
       setSelectedSkills(hasOther ? [...baseSkills, 'Other'] : baseSkills);
       setOtherSkillText(formData.otherSkill || '');
     }
-    if (field === 'linkedin' && formData.linkedin !== 'Not provided') setInputVal(formData.linkedin);
+    if (field === 'linkedin' && formData.linkedin !== 'Not provided') {
+      setInputVal(formData.linkedin || '');
+    }
     setCurrentStep(targetStep);
   }, [formData]);
 
-  // Submit Application to Backend
+  // Submit Application to Backend with immediate duplicate submission prevention
   const handleFinalSubmit = useCallback(async () => {
+    if (isSubmitting) return; // Prevent duplicate clicks
     setIsSubmitting(true);
     setSubmitError('');
     try {
@@ -268,6 +297,7 @@ export function useCandidateApplication({ onSubmitted }) {
         experience: formData.experience,
         education: formData.education,
         skills: formData.skills,
+        otherSkill: formData.otherSkill,
         relocation: formData.relocation,
         relocationLocation: formData.relocationLocation || 'Not Applicable',
         resume: formData.resume,
@@ -276,19 +306,32 @@ export function useCandidateApplication({ onSubmitted }) {
       };
 
       const res = await ApplicationApi.submitApplication(payload);
-      if (res && res.success) {
+      if (res && res.success && res.applicationId) {
         if (onSubmitted) {
           onSubmitted(res.applicationId, res.candidate || payload);
         }
       } else {
-        setSubmitError(res?.message || 'Failed to submit application. Please try again.');
+        setSubmitError(res?.message || "We couldn't submit your application right now. Please try again.");
       }
     } catch (err) {
-      setSubmitError(err.message || 'Error communicating with submission service.');
+      setSubmitError(err?.message || "We couldn't submit your application right now. Please try again.");
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // Re-enable button on error
     }
-  }, [formData, onSubmitted]);
+  }, [formData, isSubmitting, onSubmitted]);
+
+  // Reset temporary application state (used on confirmed cancel)
+  const resetApplication = useCallback(() => {
+    setFormData(INITIAL_FORM_DATA);
+    setCurrentStep(1);
+    setEditingField(null);
+    setInputVal('');
+    setInputError('');
+    setSelectedSkills([]);
+    setOtherSkillText('');
+    setSubmitError('');
+    setIsSubmitting(false);
+  }, []);
 
   return {
     currentStep,
@@ -319,6 +362,7 @@ export function useCandidateApplication({ onSubmitted }) {
     handleLinkedInChoice,
     handleLinkedInUrlSubmit,
     handleEditField,
-    handleFinalSubmit
+    handleFinalSubmit,
+    resetApplication
   };
 }

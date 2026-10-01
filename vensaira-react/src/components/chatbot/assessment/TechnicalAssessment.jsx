@@ -65,6 +65,27 @@ export default function TechnicalAssessment({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
+  if (!applicationId) {
+    return (
+      <div className="vensaira-assessment-screen cb-fade-in" style={{ padding: '32px 20px', textAlign: 'center' }}>
+        <div className="vensaira-confirm-icon" style={{ backgroundColor: '#F0F7FD', margin: '0 auto 14px' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0878C9" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </div>
+        <h4 className="vensaira-card-title">Application Required</h4>
+        <p className="vensaira-card-desc" style={{ maxWidth: '340px', margin: '8px auto 20px', color: '#64748B' }}>
+          Please complete and submit your candidate application before starting the Technical Assessment.
+        </p>
+        <button type="button" className="vensaira-btn-primary" onClick={onBack}>
+          Return to Careers
+        </button>
+      </div>
+    );
+  }
+
   // Countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
@@ -109,6 +130,7 @@ export default function TechnicalAssessment({
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
     setIsSubmitting(true);
     setSubmitError('');
 

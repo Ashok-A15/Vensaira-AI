@@ -12,10 +12,8 @@ import ChatbotInput from './components/ChatbotInput';
 import CareersScreen from './careers/CareersScreen';
 import CandidateApplication from './careers/CandidateApplication';
 import ApplicationSuccess from './careers/ApplicationSuccess';
-import AssessmentDashboard from './careers/AssessmentDashboard';
-
-import TechnicalAssessment from './assessment/TechnicalAssessment';
-import VoiceInterview from './assessment/VoiceInterview';
+import AiAssessmentStart from './careers/AiAssessmentStart';
+import ApplicationStatusView from './careers/ApplicationStatusView';
 
 export default function ChatbotWindow({
   isOpen,
@@ -101,10 +99,7 @@ export default function ChatbotWindow({
   };
 
   const handleClearChatClick = () => {
-    const isUnsavedSession =
-      currentView === 'application_flow' ||
-      currentView === 'technical_assessment' ||
-      currentView === 'voice_interview';
+    const isUnsavedSession = currentView === 'application_flow';
 
     if (isUnsavedSession) {
       setShowClearConfirm(true);
@@ -176,7 +171,7 @@ export default function ChatbotWindow({
           onContinueApplication={async (query) => {
             const res = await onContinueLookup(query);
             if (res && res.success) {
-              setCurrentView('assessment_dashboard');
+              setCurrentView('application_status');
             }
             return res;
           }}
@@ -203,47 +198,29 @@ export default function ChatbotWindow({
         <ApplicationSuccess
           applicationId={applicationId}
           candidate={candidate}
-          onStartAssessment={() => setCurrentView('technical_assessment')}
-          onViewStatus={() => setCurrentView('assessment_dashboard')}
+          onStartAssessment={() => setCurrentView('ai_assessment_start')}
+          onViewStatus={() => setCurrentView('application_status')}
           onBackToChat={() => setCurrentView('chat')}
         />
       )}
 
-      {/* Sub-View: Candidate Assessment Dashboard */}
-      {currentView === 'assessment_dashboard' && (
-        <AssessmentDashboard
+      {/* Sub-View: AI Assessment Start Screen */}
+      {currentView === 'ai_assessment_start' && (
+        <AiAssessmentStart
+          applicationId={applicationId}
           candidate={candidate}
-          assessment={assessment}
-          interview={interview}
-          onStartTechnicalAssessment={() => setCurrentView('technical_assessment')}
-          onStartVoiceInterview={() => setCurrentView('voice_interview')}
-          onBack={() => setCurrentView('careers_intro')}
+          onBack={() => setCurrentView('application_success')}
         />
       )}
 
-      {/* Sub-View: Technical Skills Assessment */}
-      {currentView === 'technical_assessment' && (
-        <TechnicalAssessment
-          applicationId={applicationId}
-          existingAssessment={assessment}
-          onCompleted={(updatedAssessment) => {
-            setAssessment(updatedAssessment);
-            setCurrentView('assessment_dashboard');
-          }}
-          onBack={() => setCurrentView('assessment_dashboard')}
-        />
-      )}
-
-      {/* Sub-View: AI Voice Interview */}
-      {currentView === 'voice_interview' && (
-        <VoiceInterview
+      {/* Sub-View: Application Status View */}
+      {currentView === 'application_status' && (
+        <ApplicationStatusView
           applicationId={applicationId}
           candidate={candidate}
-          onCompleted={(updatedInterview) => {
-            setInterview(updatedInterview);
-            setCurrentView('assessment_dashboard');
-          }}
-          onBack={() => setCurrentView('assessment_dashboard')}
+          onStartAssessment={() => setCurrentView('ai_assessment_start')}
+          onBack={() => setCurrentView('application_success')}
+          onBackToChat={() => setCurrentView('chat')}
         />
       )}
 
