@@ -210,6 +210,15 @@ export default function ChatbotWindow({
           applicationId={applicationId}
           candidate={candidate}
           onBack={() => setCurrentView('application_success')}
+          onStart={() => {
+            const p = new URLSearchParams({
+              name: `${candidate?.firstName || ''} ${candidate?.lastName || ''}`.trim(),
+              role: candidate?.appliedRole || '',
+              experience: candidate?.experience || '',
+              skills: Array.isArray(candidate?.skills) ? candidate.skills.join(', ') : (candidate?.skills || ''),
+            });
+            window.open(`http://localhost:5173?${p}`, '_blank');
+          }}
         />
       )}
 
