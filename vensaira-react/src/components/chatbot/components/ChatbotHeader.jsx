@@ -14,6 +14,7 @@ export default function ChatbotHeader({
 }) {
   const getHeaderSubtitle = () => {
     switch (currentView) {
+      /*
       case 'careers_intro':
         return 'Careers & AI Interview';
       case 'application_flow':
@@ -24,6 +25,7 @@ export default function ChatbotHeader({
         return 'AI Assessment';
       case 'application_status':
         return 'Application Status';
+      */
       default:
         return isConversationActive ? (
           <>

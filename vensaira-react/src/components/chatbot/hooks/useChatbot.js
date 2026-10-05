@@ -7,6 +7,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { ChatbotApi } from '../services/chatbotApi';
 import {
   INITIAL_MESSAGES,
+  QUICK_ACTIONS,
   ENQUIRY_INTEREST_OPTIONS,
   STORAGE_KEYS
 } from '../constants/chatbotConfig';
@@ -35,7 +36,13 @@ export function useChatbot() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          // Synchronize welcome message quick actions with current active QUICK_ACTIONS
+          return parsed.map((m) => {
+            if (m.id === 'msg-init-welcome' && m.quickActions) {
+              return { ...m, quickActions: QUICK_ACTIONS };
+            }
+            return m;
+          });
         }
       }
     } catch {
@@ -150,12 +157,14 @@ export function useChatbot() {
       text: label
     });
 
+    /*
     if (action === 'careers_intro') {
       setTimeout(() => {
         setCurrentView('careers_intro');
       }, 200);
       return;
     }
+    */
 
     if (action === 'expert_enquiry') {
       setTimeout(() => {
@@ -223,6 +232,7 @@ export function useChatbot() {
 
     const response = getResponseForQuery(trimmed);
 
+    /*
     if (response.type === 'careers_intro') {
       setTimeout(() => {
         addMessage({
@@ -233,6 +243,7 @@ export function useChatbot() {
       }, 300);
       return;
     }
+    */
 
     if (response.type === 'expert_enquiry') {
       setTimeout(() => {

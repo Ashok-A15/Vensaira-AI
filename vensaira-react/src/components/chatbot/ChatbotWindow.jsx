@@ -9,11 +9,13 @@ import ChatbotHeader from './components/ChatbotHeader';
 import ChatbotMessages from './components/ChatbotMessages';
 import ChatbotInput from './components/ChatbotInput';
 
+/*
 import CareersScreen from './careers/CareersScreen';
 import CandidateApplication from './careers/CandidateApplication';
 import ApplicationSuccess from './careers/ApplicationSuccess';
 import AiAssessmentStart from './careers/AiAssessmentStart';
 import ApplicationStatusView from './careers/ApplicationStatusView';
+*/
 
 export default function ChatbotWindow({
   isOpen,
@@ -91,9 +93,12 @@ export default function ChatbotWindow({
   };
 
   const handleActionClick = (btn) => {
+    /*
     if (btn.action === 'careers_intro') {
       setCurrentView('careers_intro');
-    } else if (btn.route) {
+    } else
+    */
+    if (btn.route) {
       handleRouteClick(btn.route);
     }
   };
@@ -165,6 +170,7 @@ export default function ChatbotWindow({
       />
 
       {/* Sub-View: Careers Intro */}
+      {/*
       {currentView === 'careers_intro' && (
         <CareersScreen
           onStartApplication={() => setCurrentView('application_flow')}
@@ -179,8 +185,10 @@ export default function ChatbotWindow({
           existingApplication={candidate}
         />
       )}
+      */}
 
       {/* Sub-View: Candidate Application Flow */}
+      {/*
       {currentView === 'application_flow' && (
         <CandidateApplication
           onSubmitted={(newAppId, newCandidate) => {
@@ -192,8 +200,10 @@ export default function ChatbotWindow({
           onBackToIntro={() => setCurrentView('careers_intro')}
         />
       )}
+      */}
 
       {/* Sub-View: Application Success Screen */}
+      {/*
       {currentView === 'application_success' && (
         <ApplicationSuccess
           applicationId={applicationId}
@@ -203,8 +213,10 @@ export default function ChatbotWindow({
           onBackToChat={() => setCurrentView('chat')}
         />
       )}
+      */}
 
       {/* Sub-View: AI Assessment Start Screen */}
+      {/*
       {currentView === 'ai_assessment_start' && (
         <AiAssessmentStart
           applicationId={applicationId}
@@ -221,8 +233,10 @@ export default function ChatbotWindow({
           }}
         />
       )}
+      */}
 
       {/* Sub-View: Application Status View */}
+      {/*
       {currentView === 'application_status' && (
         <ApplicationStatusView
           applicationId={applicationId}
@@ -232,6 +246,7 @@ export default function ChatbotWindow({
           onBackToChat={() => setCurrentView('chat')}
         />
       )}
+      */}
 
       {/* Default Chat View */}
       {currentView === 'chat' && (

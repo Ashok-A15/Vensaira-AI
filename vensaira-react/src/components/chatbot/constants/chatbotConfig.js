@@ -9,7 +9,9 @@ export const STORAGE_KEYS = {
 };
 
 export const QUICK_ACTIONS = [
+  /*
   { id: 'qa-careers', label: 'Careers & AI Interview', action: 'careers_intro', icon: 'briefcase' },
+  */
   { id: 'qa-ai', label: 'Explore AI Solutions', action: 'ai_solutions', icon: 'sparkle' },
   { id: 'qa-services', label: 'Explore Services', action: 'services', icon: 'grid' },
   { id: 'qa-industries', label: 'Industries We Serve', action: 'industries', icon: 'building' },

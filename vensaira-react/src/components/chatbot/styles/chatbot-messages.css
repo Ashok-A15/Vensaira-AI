@@ -132,6 +132,11 @@
   box-sizing: border-box;
 }
 
+.vensaira-chat-quick-actions .vensaira-chat-quick-btn:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-content: center;
+}
+
 .vensaira-chat-quick-btn {
   display: flex;
   align-items: center;

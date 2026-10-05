@@ -28,6 +28,7 @@ export function createMessage({ sender, text, quickActions, chips, buttons }) {
 export function getResponseForQuery(rawQuery) {
   const query = rawQuery.toLowerCase().trim();
 
+  /*
   // Careers & Job application
   if (
     query.includes('career') ||
@@ -48,6 +49,7 @@ export function getResponseForQuery(rawQuery) {
       ]
     };
   }
+  */
 
   // Enquiry / Talk to experts / Contact initiation
   if (
