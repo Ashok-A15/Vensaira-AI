@@ -13,16 +13,14 @@ export default function TermsConditions() {
       <div className="legal-container">
         <header className="legal-header">
           <h1 className="legal-title">Vensaira AI Terms &amp; Conditions</h1>
-          <div className="legal-meta">
-            <span>1 Oct 2026 · @ZE</span>
-          </div>
+
           <div className="legal-effective-date">Effective Date: October 1, 2026</div>
         </header>
 
         <div className="legal-content">
           <div className="legal-intro">
             <p>
-              Thank you for choosing Vensaira AI. These Terms &amp; Conditions (&quot;Terms&quot;) set out the rules for accessing and using the Vensaira AI website, AI products, applications, software, APIs, research tools, and related offerings (together, the &quot;Services&quot;), operated by [Registered Legal Entity Name] (&quot;Vensaira&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;).
+              Thank you for choosing Vensaira AI. These Terms &amp; Conditions (&quot;Terms&quot;) set out the rules for accessing and using the Vensaira AI website, AI products, applications, software, APIs, research tools, and related offerings (together, the &quot;Services&quot;), operated by Vensaira AI Innovations.
             </p>
             <p>
               By visiting our website or using any of the Services, you accept these Terms. If you disagree with any part of them, please stop using the relevant Services.
@@ -103,7 +101,7 @@ export default function TermsConditions() {
           <section className="legal-section">
             <h2 className="legal-section-title">6. Ownership of Our Materials</h2>
             <p>
-              Unless stated otherwise, the Vensaira website and Services, including software, models, interfaces, designs, visuals, logos, trademarks, documentation, and research materials, belong to or are licensed to [Registered Legal Entity Name].
+              Unless stated otherwise, the Vensaira website and Services, including software, models, interfaces, designs, visuals, logos, trademarks, documentation, and research materials, belong to or are licensed to Vensaira AI Innovations.
             </p>
             <p>
               Using the Services does not transfer any of our intellectual property rights to you.
@@ -163,7 +161,7 @@ export default function TermsConditions() {
           <section className="legal-section">
             <h2 className="legal-section-title">11. Limits on Our Liability</h2>
             <p>
-              To the maximum extent permitted by law, [Registered Legal Entity Name] and its directors, staff, affiliates, contractors, and partners are not liable for any indirect, incidental, special, consequential, or punitive losses arising from your use of, or inability to use, the Services.
+              To the maximum extent permitted by law, Vensaira AI Innovations and its directors, staff, affiliates, contractors, and partners are not liable for any indirect, incidental, special, consequential, or punitive losses arising from your use of, or inability to use, the Services.
             </p>
             <p>
               These Terms do not exclude or restrict any liability that cannot legally be excluded or restricted.
@@ -177,7 +175,7 @@ export default function TermsConditions() {
             </p>
             <p>
               <Link to="/privacy-policy" className="legal-inline-link">
-                [View our Privacy Policy &rarr;]
+                View our Privacy Policy &rarr;
               </Link>
             </p>
           </section>
@@ -205,7 +203,7 @@ export default function TermsConditions() {
               These Terms are governed by and interpreted under the laws of India.
             </p>
             <p>
-              Any dispute arising from these Terms or the Services will fall under the jurisdiction of the competent courts in [City], India, unless applicable law requires otherwise or a separate written agreement says differently.
+              Any dispute arising from these Terms or the Services will fall under the exclusive jurisdiction of the competent courts in India, unless applicable law requires otherwise or a separate written agreement says differently.
             </p>
           </section>
 
@@ -213,9 +211,9 @@ export default function TermsConditions() {
             <h2 className="legal-section-title">16. Contact Us</h2>
             <p>Questions about these Terms? Get in touch:</p>
             <div className="legal-contact-block">
-              <p><strong>Vensaira AI ([Registered Legal Entity Name])</strong></p>
-              <p>Email: [legal@vensaira.ai]</p>
-              <p>Website: [vensaira.ai]</p>
+              <p><strong>Vensaira AI Innovations</strong></p>
+              <p>Email: legal@vensaira.ai</p>
+              <p>Website: www.vensaira.ai</p>
             </div>
           </section>
         </div>

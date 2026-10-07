@@ -12,9 +12,7 @@ export default function PrivacyPolicy() {
       <div className="legal-container">
         <header className="legal-header">
           <h1 className="legal-title">Vensaira AI Privacy Policy</h1>
-          <div className="legal-meta">
-            <span>1 Oct 2026 · @ZE</span>
-          </div>
+
           <div className="legal-effective-date">Effective Date: October 1, 2026</div>
         </header>
 
@@ -22,7 +20,7 @@ export default function PrivacyPolicy() {
           <section className="legal-section" style={{ marginTop: 0 }}>
             <h2 className="legal-section-title">Our Commitment to You</h2>
             <p>
-              Vensaira AI ([Registered Legal Entity Name]) (&quot;Vensaira&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) treats the personal data you share with us as a matter of trust. This Privacy Policy describes what data we gather, why we gather it, how we safeguard it, and the choices available to you.
+              Vensaira AI treats the personal data you share with us as a matter of trust. This Privacy Policy describes what data we gather, why we gather it, how we safeguard it, and the choices available to you.
             </p>
             <p>
               This policy covers our website, AI-powered products, applications, APIs, and any related offerings (together, the &quot;Services&quot;). By accessing or using the Services, you acknowledge the practices described here.
@@ -170,9 +168,9 @@ export default function PrivacyPolicy() {
             <h2 className="legal-section-title">12. Get in Touch</h2>
             <p>For any privacy questions, requests, or concerns, reach us at:</p>
             <div className="legal-contact-block">
-              <p><strong>Vensaira AI ([Registered Legal Entity Name])</strong></p>
-              <p>Email: [info@vensaira.ai]</p>
-              <p>Website: [vensaira.ai]</p>
+              <p><strong>Vensaira AI Innovations</strong></p>
+              <p>Email: info@vensaira.ai</p>
+              <p>Website: www.vensaira.ai</p>
             </div>
           </section>
         </div>
